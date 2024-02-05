@@ -2,17 +2,20 @@
 <html>
     <head>
         <title>TractorGame</title>
-        <style></style>
+        <link rel="stylesheet" href="styles/CSS/style.css">
     </head>
-    <body> 
+    <body onload="startGame()">
+        
         <nav>
             <ul>
 
-                <li><a href="index.html">home</a></li>
+                <li><a class="active" href="index.html">home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
-        <h1>Index</h1>
+        <div id="gameCanvas"></div>
+        <script src="scripts/main.js"></script>
     </body>
+
 </html>
