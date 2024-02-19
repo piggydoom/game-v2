@@ -1,9 +1,10 @@
+let playerPlane;
 let planeImage = new Image();
+let ctx;
 
 
 
 
-planeImage.src = "styles/Images/plane.png";
 
 let myGameArea = {
     canvas: document.createElement("canvas"),
@@ -24,7 +25,8 @@ let myGameArea = {
 
         //frame interval counter
         // this.interval = setInterval(updateGameArea, 20);
-
+        this.context.fillStyle = "#2bceff";
+        this.context.fillRect(0, 0, myGameArea.canvas.width, myGameArea.canvas.height);
     },
 
     //clearing the screen
@@ -37,16 +39,18 @@ let myGameArea = {
 //waits for page body to load then runs startGame
 function startGame() {
     myGameArea.start();
-
-
-
-
+    window.onload = function(){
+        playerPlane = new component(planeImage, 128, 128, myGameArea.canvas.innerWidth / 2, myGameArea.canvas.innerHeight * 0.8);
+        ctx = myGameArea.context;
+    }
+   
+    planeImage.src = "styles/Images/plane.png";
+  
 }
-let pX = 100;
 function animate() {
-    //set background to blue
-    ctx.fillStyle = "#2bceff";
-    ctx.fillRect(0, 0, myGameArea.canvas.width, myGameArea.canvas.height);
+    console.log("test");
+   playerPlane.update();
+   
 
 
 
@@ -65,7 +69,7 @@ function component(image, width, height, pX, pY){
 
 
     this.update = function(){
-        ctx = myGameArea.context;
+
         // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
         ctx.drawImage(this.image, 0, 0, 128, 128, myGameArea.canvas.innerWidth / 2, myGameArea.canvas.innerHeight / 2, 128, 128 )
     }
