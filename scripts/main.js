@@ -1,8 +1,9 @@
 let playerPlane;
+let cloud1;
 const planeImage = new Image();
 const cloudImage = new Image();
 let ctx;
-let cloud1;
+
 
 
 
@@ -53,6 +54,16 @@ function startGame() {
             Math.ceil(myGameArea.canvas.height * 0.7)); //Ypos
         window.requestAnimationFrame(animate);
 
+    
+
+
+        // console.log(Math.ceil(myGameArea.canvas.width / 2));
+        // console.log(myGameArea.canvas.width);
+
+
+    }
+
+
     cloudImage.onload = function () {
         cloud1 = new Component(cloudImage,
             32,
@@ -61,12 +72,6 @@ function startGame() {
             getRandomInt(myGameArea.canvas.height))
     }
 
-
-        // console.log(Math.ceil(myGameArea.canvas.width / 2));
-        // console.log(myGameArea.canvas.width);
-
-
-    }
 
     planeImage.src = "styles/Images/plane.png";
 
