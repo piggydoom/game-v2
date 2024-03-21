@@ -3,6 +3,10 @@ let cloud1;
 const planeImage = new Image();
 const cloudImage = new Image();
 let ctx;
+let secondsPassed = 0;
+let oldTimeStamp = 0;
+let movingSpeed = 50;
+let timePassed = 0;
 
 
 
@@ -41,6 +45,32 @@ let myGameArea = {
     },
 }
 
+function gameLoop(timeStamp){
+    //calculate how much time has passed
+    secondsPassed = (timeStamp - oldTimeStamp) / 1000;
+    oldTimeStamp = timeStamp;
+    
+    
+    myGameArea.clear();
+
+
+    playerPlane.draw();
+    
+   
+
+
+    //passed the time to update
+    update(secondsPassed);
+    
+    window.requestAnimationFrame(gameLoop);
+
+}
+//game logic loop
+function update(secondsPassed) {
+
+    timePassed += secondsPassed;
+    playerPlane.update(timePassed);
+}
 
 //waits for page body to load then runs startGame
 function startGame() {
@@ -52,7 +82,7 @@ function startGame() {
             128, //height
             Math.ceil(myGameArea.canvas.width / 2 - 64), //Xpos
             Math.ceil(myGameArea.canvas.height * 0.7)); //Ypos
-        window.requestAnimationFrame(animate);
+            window.requestAnimationFrame(gameLoop);
 
     
 
@@ -64,30 +94,23 @@ function startGame() {
     }
 
 
-    cloudImage.onload = function () {
-        cloud1 = new Component(cloudImage,
-            32,
-            32,
-            getRandomInt(myGameArea.canvas.width),
-            getRandomInt(myGameArea.canvas.height))
-    }
+    // cloudImage.onload = function () {
+    //     cloud1 = new Component(cloudImage,
+    //         32,
+    //         32,
+    //         getRandomInt(myGameArea.canvas.width),
+    //         getRandomInt(myGameArea.canvas.height))
+    // }
 
 
     planeImage.src = "styles/Images/plane.png";
 
 }
-function animate() {
-
-    myGameArea.clear();
-    playerPlane.update();
-    cloud1.update();
 
 
 
 
 
-    window.requestAnimationFrame(animate);
-};
 
 
 function Player(image, width, height, pX, pY) {
@@ -96,41 +119,50 @@ function Player(image, width, height, pX, pY) {
     this.height = height;
     this.pX = pX;
     this.pY = pY;
+    this.yVelocity = 5;
+    this.xVelocity = 5;
 
 
-     
-    this.update = function () {
-        //controls
-        addEventListener("keydown", (event) => { });
-
-        onkeydown = (event) => {
-            console.log(event.key);
-            
-            //move left when a is pressed
-            if (event.key == "a" || event.key == "A") {
-                this.pX += -5;
-            }
-
-            //move right when d is pressed
-            else if (event.key == "d" || event.key == "D"){
-                this.pX += 5;
-            }
-            
-            //move up when w is pressed
-            else if (event.key == "w" || event.key == "W"){
-                this.pY += -5;
-            }
-
-            //move down when s is pressed
-
-            else if (event.key == "s" || event.key == "S"){
-                this.pY += 5;
-            }
-        };
-
-
+    this.draw = function(){
         // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-        ctx.drawImage(this.image, 0, 0, 128, 128, this.pX, this.pY, 128, 128)
+        ctx.drawImage(this.image, 0, 0, 128, 128, this.pX, this.pY, 128, 128);
+    }
+     
+    this.update = function (timePassed) {
+
+
+
+        this.pX += this.xVelocity * timePassed;
+        //controls
+        // addEventListener("keydown", (event) => { });
+
+        // onkeydown = (event) => {
+        //     console.log(event.key);
+            
+        //     //move left when a is pressed
+        //     if (event.key == "a" || event.key == "A") {
+        //         this.pX += -200 * secondsPassed;
+        //     }
+
+        //     //move right when d is pressed
+        //     else if (event.key == "d" || event.key == "D"){
+        //         this.pX += 200 * secondsPassed;
+        //     }
+            
+        //     //move up when w is pressed
+        //     else if (event.key == "w" || event.key == "W"){
+        //         this.pY += -200 * secondsPassed;
+        //     }
+
+        //     //move down when s is pressed
+
+        //     else if (event.key == "s" || event.key == "S"){
+        //         this.pY += 200 * secondsPassed;
+        //     }
+        // };
+
+
+        
     }
 };
 
