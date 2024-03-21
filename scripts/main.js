@@ -111,6 +111,33 @@ function startGame() {
 
 
 
+let keyPresses = {
+    left: false,
+    right: false,
+    up: false,
+    down: false
+}
+
+let keyMap = {
+    68: "right",
+    65: "left",
+    87: "up",
+    83: "down",
+}
+
+
+function keyDown(event){
+    let key = keyMap[event.keyCode];
+    keyPresses[key] = true;
+}
+
+function keyUp(event){
+    let key = keyMap[event.keyCode];
+    keyPresses[key] = false;
+}
+
+window.addEventListener("keydown", keyDown, false);
+window.addEventListener("keyup", keyUp, false);
 
 
 function Player(image, width, height, pX, pY) {
@@ -130,7 +157,7 @@ function Player(image, width, height, pX, pY) {
      
     this.update = function (timePassed) {
 
-
+//wip here
 
         this.pX += this.xVelocity * timePassed;
         //controls
