@@ -111,7 +111,7 @@ function startGame() {
 
 
 
-let keyPresses = {
+let keyPress = {
     left: false,
     right: false,
     up: false,
@@ -128,12 +128,12 @@ let keyMap = {
 
 function keyDown(event){
     let key = keyMap[event.keyCode];
-    keyPresses[key] = true;
+    keyPress[key] = true;
 }
 
 function keyUp(event){
     let key = keyMap[event.keyCode];
-    keyPresses[key] = false;
+    keyPress[key] = false;
 }
 
 window.addEventListener("keydown", keyDown, false);
@@ -146,8 +146,8 @@ function Player(image, width, height, pX, pY) {
     this.height = height;
     this.pX = pX;
     this.pY = pY;
-    this.yVelocity = 5;
-    this.xVelocity = 5;
+    this.yVelocity = 1;
+    this.xVelocity = 1;
 
 
     this.draw = function(){
@@ -157,38 +157,22 @@ function Player(image, width, height, pX, pY) {
      
     this.update = function (timePassed) {
 
-//wip here
+        if(keyPress.left){
+            this.pX -= this.xVelocity * timePassed;
+        }
 
-        this.pX += this.xVelocity * timePassed;
-        //controls
-        // addEventListener("keydown", (event) => { });
+        if(keyPress.right){
+            this.pX += xVelocity * timePassed; 
+        }
 
-        // onkeydown = (event) => {
-        //     console.log(event.key);
-            
-        //     //move left when a is pressed
-        //     if (event.key == "a" || event.key == "A") {
-        //         this.pX += -200 * secondsPassed;
-        //     }
+        if(keyPress.up){
+            this.pY -= this.yVelocity * timePassed;
+        }
 
-        //     //move right when d is pressed
-        //     else if (event.key == "d" || event.key == "D"){
-        //         this.pX += 200 * secondsPassed;
-        //     }
-            
-        //     //move up when w is pressed
-        //     else if (event.key == "w" || event.key == "W"){
-        //         this.pY += -200 * secondsPassed;
-        //     }
-
-        //     //move down when s is pressed
-
-        //     else if (event.key == "s" || event.key == "S"){
-        //         this.pY += 200 * secondsPassed;
-        //     }
-        // };
-
-
+        if(keyPress.down){
+         this.pY += this.yVelocity * timePassed;
+        }
+       
         
     }
 };
