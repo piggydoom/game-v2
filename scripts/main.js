@@ -78,8 +78,8 @@ function startGame() {
     ctx = myGameArea.context;
     planeImage.onload = function () {
         playerPlane = new Player(planeImage, //image
-            128, //width 
-            128, //height
+            88, //width 
+            83, //height
             Math.ceil(myGameArea.canvas.width / 2 - 64), //Xpos
             Math.ceil(myGameArea.canvas.height * 0.7)); //Ypos
             window.requestAnimationFrame(gameLoop);
@@ -87,20 +87,13 @@ function startGame() {
     
 
 
-        // console.log(Math.ceil(myGameArea.canvas.width / 2));
-        // console.log(myGameArea.canvas.width);
+        
+
 
 
     }
 
 
-    // cloudImage.onload = function () {
-    //     cloud1 = new Component(cloudImage,
-    //         32,
-    //         32,
-    //         getRandomInt(myGameArea.canvas.width),
-    //         getRandomInt(myGameArea.canvas.height))
-    // }
 
 
     planeImage.src = "styles/Images/plane.png";
@@ -146,31 +139,32 @@ function Player(image, width, height, pX, pY) {
     this.height = height;
     this.pX = pX;
     this.pY = pY;
-    this.yVelocity = 1;
-    this.xVelocity = 1;
-
+    this.speed = 500;
 
     this.draw = function(){
         // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-        ctx.drawImage(this.image, 0, 0, 128, 128, this.pX, this.pY, 128, 128);
+        ctx.drawImage(this.image, 0, 0, 88, 83, this.pX, this.pY, 88, 83);
     }
      
     this.update = function (timePassed) {
+        const distance = (this.speed * timePassed) / 1000;
+        this.pX = Math.max(0, Math.min(myGameArea.canvas.width - this.width, this.pX));
+        this.pY = Math.max(0, Math.min(myGameArea.canvas.height - this.height, this.pY));
 
         if(keyPress.left){
-            this.pX -= this.xVelocity * timePassed;
+            this.pX -= distance;
         }
 
         if(keyPress.right){
-            this.pX += xVelocity * timePassed; 
+            this.pX += distance; 
         }
 
         if(keyPress.up){
-            this.pY -= this.yVelocity * timePassed;
+            this.pY -= distance;
         }
 
         if(keyPress.down){
-         this.pY += this.yVelocity * timePassed;
+         this.pY += distance;
         }
        
         
@@ -200,3 +194,16 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
 
+function loadImages(sources,callback){
+    let images = {};
+    let loadedImages = 0;
+    let numImages = 0;
+    for(let src in sources){
+        numImages++;
+    }
+    for(let src in sources){
+        //wip
+    }
+
+
+};
