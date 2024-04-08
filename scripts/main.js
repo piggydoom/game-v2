@@ -1,7 +1,9 @@
 let playerPlane;
 let cloud1;
-const planeImage = new Image();
-const cloudImage = new Image();
+// const planeImage = new Image();
+// const cloudImage = new Image();
+const urls = ["styles/Images/plane.png", "styles/Images/clouds.png"];
+
 let ctx;
 let secondsPassed = 0;
 let oldTimeStamp = 0;
@@ -10,7 +12,7 @@ let timePassed = 0;
 
 
 
-
+const images = await preloadImages(urls);
 
 
 
@@ -77,7 +79,7 @@ function startGame() {
     myGameArea.start();
     ctx = myGameArea.context;
     planeImage.onload = function () {
-        playerPlane = new Player(planeImage, //image
+        playerPlane = new Player(images[0], //image
             88, //width 
             83, //height
             Math.ceil(myGameArea.canvas.width / 2 - 64), //Xpos
@@ -139,7 +141,7 @@ function Player(image, width, height, pX, pY) {
     this.height = height;
     this.pX = pX;
     this.pY = pY;
-    this.speed = 10;
+    this.speed = 100; //10
 
     this.draw = function(){
         // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
@@ -155,22 +157,31 @@ function Player(image, width, height, pX, pY) {
 
         if(keyPress.left){
             this.pX -= distance;
+            if(this.pX <= 0){
+                this.pX = myGameArea.canvas.width - this.width;
+            }
         }
 
         if(keyPress.right){
             this.pX += distance; 
+            if(this.pX >= myGameArea.canvas.width - this.width){
+                this.pX = 0;
+            }
         }
 
         if(keyPress.up){
             this.pY -= distance;
-            if(this.pY = 0){
-             console.log("hit top");
+            if(this.pY <= 0){
+                this.pY = myGameArea.canvas.height - this.height;
               
             }
         }
 
         if(keyPress.down){
          this.pY += distance;
+         if(this.pY >= myGameArea.canvas.height - this.height){
+            this.pY = 0;
+         }
         }
        
         
@@ -200,16 +211,17 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
 
-function loadImages(sources,callback){
-    let images = {};
-    let loadedImages = 0;
-    let numImages = 0;
-    for(let src in sources){
-        numImages++;
-    }
-    for(let src in sources){
-        //wip
-    }
-
-
-};
+  function preloadImages(urls) {
+    const promises = urls.map((url) => {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+  
+        image.src = url;
+  
+        image.onload = () => resolve(image);
+        image.onerror = () => reject(`Image failed to load: ${url}`);
+      });
+    });
+  
+    return Promise.all(promises);
+  }
