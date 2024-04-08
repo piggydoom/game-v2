@@ -139,7 +139,7 @@ function Player(image, width, height, pX, pY) {
     this.height = height;
     this.pX = pX;
     this.pY = pY;
-    this.speed = 500;
+    this.speed = 10;
 
     this.draw = function(){
         // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
@@ -147,9 +147,11 @@ function Player(image, width, height, pX, pY) {
     }
      
     this.update = function (timePassed) {
-        const distance = (this.speed * timePassed) / 1000;
+        const distance = this.speed;
         this.pX = Math.max(0, Math.min(myGameArea.canvas.width - this.width, this.pX));
         this.pY = Math.max(0, Math.min(myGameArea.canvas.height - this.height, this.pY));
+
+
 
         if(keyPress.left){
             this.pX -= distance;
@@ -161,6 +163,10 @@ function Player(image, width, height, pX, pY) {
 
         if(keyPress.up){
             this.pY -= distance;
+            if(this.pY = 0){
+             console.log("hit top");
+              
+            }
         }
 
         if(keyPress.down){
