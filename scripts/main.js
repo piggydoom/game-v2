@@ -33,7 +33,7 @@ let myGameArea = {
 
         //frame interval counter
         // this.interval = setInterval(updateGameArea, 20);
-      
+
     },
 
     //clearing the screen
@@ -44,23 +44,23 @@ let myGameArea = {
     },
 }
 
-function gameLoop(timeStamp){
+function gameLoop(timeStamp) {
     //calculate how much time has passed
     secondsPassed = (timeStamp - oldTimeStamp) / 1000;
     oldTimeStamp = timeStamp;
-    
-    
+
+
     myGameArea.clear();
 
 
     playerPlane.draw();
-    
-   
+
+
 
 
     //passed the time to update
     update(secondsPassed);
-    
+
     window.requestAnimationFrame(gameLoop);
 
 }
@@ -75,14 +75,15 @@ console.log();
 function startGame() {
     myGameArea.start();
     ctx = myGameArea.context;
-    
-        playerPlane = new Player(
-            88, //width 
-            83, //height
-            Math.ceil(myGameArea.canvas.width / 2 - 64), //Xpos
-            Math.ceil(myGameArea.canvas.height * 0.7)); //Ypos
-            window.requestAnimationFrame(gameLoop);
 
+    playerPlane = new Player(
+        88, //width 
+        83, //height
+        Math.ceil(myGameArea.canvas.width / 2 - 64), //Xpos
+        Math.ceil(myGameArea.canvas.height * 0.7)); //Ypos
+    window.requestAnimationFrame(gameLoop);
+    
+    cloud1 = new Component(32, 32, getRandomInt(myGameArea.canvas.width), getRandomInt(myGameArea.canvas.height))
 }
 
 
@@ -104,12 +105,12 @@ let keyMap = {
 }
 
 
-function keyDown(event){
+function keyDown(event) {
     let key = keyMap[event.keyCode];
     keyPress[key] = true;
 }
 
-function keyUp(event){
+function keyUp(event) {
     let key = keyMap[event.keyCode];
     keyPress[key] = false;
 }
@@ -118,8 +119,8 @@ window.addEventListener("keydown", keyDown, false);
 window.addEventListener("keyup", keyUp, false);
 
 
-function Player( width, height, pX, pY) {
-     loadImage('styles/Images/plane.png')
+function Player(width, height, pX, pY) {
+    loadImage('styles/Images/plane.png')
     .then(image=>{ this.image = image})
     this.width = width;
     this.height = height;
@@ -127,13 +128,13 @@ function Player( width, height, pX, pY) {
     this.pY = pY;
     this.speed = 100; //10
 
-    
 
-    this.draw = function(){
+
+    this.draw = function () {
         // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-        ctx.drawImage(this.image, 0, 0, 88, 83, this.pX, this.pY, 88, 83);
+     ctx.drawImage(this.image, 0, 0, 88, 83, this.pX, this.pY, 88, 83);
     }
-     
+
     this.update = function (timePassed) {
         const distance = this.speed;
         this.pX = Math.max(0, Math.min(myGameArea.canvas.width - this.width, this.pX));
@@ -141,52 +142,53 @@ function Player( width, height, pX, pY) {
 
 
 
-        if(keyPress.left){
+        if (keyPress.left) {
             this.pX -= distance;
-            if(this.pX <= 0){
+            if (this.pX <= 0) {
                 this.pX = myGameArea.canvas.width - this.width;
             }
         }
 
-        if(keyPress.right){
-            this.pX += distance; 
-            if(this.pX >= myGameArea.canvas.width - this.width){
+        if (keyPress.right) {
+            this.pX += distance;
+            if (this.pX >= myGameArea.canvas.width - this.width) {
                 this.pX = 0;
             }
         }
 
-        if(keyPress.up){
+        if (keyPress.up) {
             this.pY -= distance;
-            if(this.pY <= 0){
+            if (this.pY <= 0) {
                 this.pY = myGameArea.canvas.height - this.height;
-              
+
             }
         }
 
-        if(keyPress.down){
-         this.pY += distance;
-         if(this.pY >= myGameArea.canvas.height - this.height){
-            this.pY = 0;
-         }
+        if (keyPress.down) {
+            this.pY += distance;
+            if (this.pY >= myGameArea.canvas.height - this.height) {
+                this.pY = 0;
+            }
         }
-       
-        
+
+
     }
 };
 
 
 
-function Component(image, width, height, pX, pY) {
-    this.image = image;
+function Component(width, height, pX, pY) {
+    loadImage('styles/Images/clouds.png')
+        .then(image => { this.image = image });
     this.width = width;
     this.height = height;
     this.pX = pX;
     this.pY = pY;
 
 
-     
+
     this.update = function () {
- 
+
 
         // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
         ctx.drawImage(this.image, 0, 0, 32, 32, this.pX, this.pY, 128, 128)
@@ -195,16 +197,16 @@ function Component(image, width, height, pX, pY) {
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
-  }
+}
 
 
-  function loadImage(url) {
-    return new  Promise(resolve => {
+function loadImage(url) {
+    return new Promise(resolve => {
         const image = new Image();
         image.addEventListener('load', () => {
             resolve(image);
         });
-        image.src = url; 
+        image.src = url;
     });
 }
 
