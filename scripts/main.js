@@ -2,7 +2,6 @@ let playerPlane;
 let cloud1;
 // const planeImage = new Image();
 // const cloudImage = new Image();
-const urls = ["styles/Images/plane.png", "styles/Images/clouds.png"];
 
 let ctx;
 let secondsPassed = 0;
@@ -12,9 +11,9 @@ let timePassed = 0;
 
 
 
-const images = await preloadImages(urls);
+const images = preloadAll(["styles/Images/plane.png", "styles/Images/clouds.png"]);
 
-
+console.log(images);
 
 
 let myGameArea = {
@@ -211,17 +210,11 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
 
-  function preloadImages(urls) {
-    const promises = urls.map((url) => {
-      return new Promise((resolve, reject) => {
-        const image = new Image();
+const preload = src => new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = resolve
+    img.onerror = reject
+    img.src = src
+  })
   
-        image.src = url;
-  
-        image.onload = () => resolve(image);
-        image.onerror = () => reject(`Image failed to load: ${url}`);
-      });
-    });
-  
-    return Promise.all(promises);
-  }
+const preloadAll = srcs => Promise.all(srcs.map(preload))
