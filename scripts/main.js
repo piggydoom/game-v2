@@ -9,11 +9,9 @@ let oldTimeStamp = 0;
 let movingSpeed = 50;
 let timePassed = 0;
 
+loadImage("styles/Images/plane.png")
 
 
-const images = preloadAll(["styles/Images/plane.png", "styles/Images/clouds.png"]);
-
-console.log(images);
 
 
 let myGameArea = {
@@ -72,32 +70,18 @@ function update(secondsPassed) {
     timePassed += secondsPassed;
     playerPlane.update(timePassed);
 }
-
+console.log();
 //waits for page body to load then runs startGame
 function startGame() {
     myGameArea.start();
     ctx = myGameArea.context;
-    planeImage.onload = function () {
-        playerPlane = new Player(images[0], //image
+    
+        playerPlane = new Player(
             88, //width 
             83, //height
             Math.ceil(myGameArea.canvas.width / 2 - 64), //Xpos
             Math.ceil(myGameArea.canvas.height * 0.7)); //Ypos
             window.requestAnimationFrame(gameLoop);
-
-    
-
-
-        
-
-
-
-    }
-
-
-
-
-    planeImage.src = "styles/Images/plane.png";
 
 }
 
@@ -134,13 +118,16 @@ window.addEventListener("keydown", keyDown, false);
 window.addEventListener("keyup", keyUp, false);
 
 
-function Player(image, width, height, pX, pY) {
-    this.image = image;
+function Player( width, height, pX, pY) {
+     loadImage('styles/Images/plane.png')
+    .then(image=>{ this.image = image})
     this.width = width;
     this.height = height;
     this.pX = pX;
     this.pY = pY;
     this.speed = 100; //10
+
+    
 
     this.draw = function(){
         // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
@@ -210,11 +197,14 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
 
-const preload = src => new Promise((resolve, reject) => {
-    const img = new Image()
-    img.onload = resolve
-    img.onerror = reject
-    img.src = src
-  })
-  
-const preloadAll = srcs => Promise.all(srcs.map(preload))
+
+  function loadImage(url) {
+    return new  Promise(resolve => {
+        const image = new Image();
+        image.addEventListener('load', () => {
+            resolve(image);
+        });
+        image.src = url; 
+    });
+}
+
