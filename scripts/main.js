@@ -8,7 +8,7 @@ let secondsPassed = 0;
 let oldTimeStamp = 0;
 let movingSpeed = 50;
 let timePassed = 0;
-
+let clouds = [];
 
 
 
@@ -53,8 +53,9 @@ function gameLoop(timeStamp) {
     myGameArea.clear();
 
 
-    playerPlane.draw();
-    cloud1.draw();
+
+  
+
 
 
 
@@ -64,14 +65,29 @@ function gameLoop(timeStamp) {
 
     window.requestAnimationFrame(gameLoop);
 
+    playerPlane.draw();
+    clouds.forEach((cloud) => {
+        cloud.draw();
+     
+
+    });
+
+
 }
 //game logic loop
 function update(secondsPassed) {
 
     timePassed += secondsPassed;
     playerPlane.update(timePassed);
+
+
+    clouds.forEach((cloud) => {
+        cloud.update();
+        });
 }
-console.log();
+
+
+
 //waits for page body to load then runs startGame
 function startGame() {
     myGameArea.start();
@@ -85,10 +101,29 @@ function startGame() {
             Math.ceil(myGameArea.canvas.height * 0.7)); //Ypos
         window.requestAnimationFrame(gameLoop);
 
-        cloud1 = new Component(images.clouds, 32, 32, getRandomInt(myGameArea.canvas.width), getRandomInt(myGameArea.canvas.height));
+       
+            
+
+
+        //spawn clouds
+        setInterval(() => {
+            let w = 32;
+            let h = 32;
+            let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
+            let y = Math.random() * Math.abs(myGameArea.canvas.height - h);
+            let speed = 25;
+            clouds.push(new entity(images.clouds, w, h, x, y, speed));
+        }, 100);
+
+
 
     })
 }
+
+
+    
+
+
 
 
 let keyPress = {
@@ -178,8 +213,8 @@ function Player(image, width, height, pX, pY) {
 
 
 class entity {
-    constructor(image, width, height, pX, pY, speed) {
-        this.image = image;
+    constructor(img, width, height, pX, pY, speed) {
+        this.image = img;
         this.width = width;
         this.height = height;
         this.pX = pX;
@@ -190,22 +225,18 @@ class entity {
 
 
 
-    draw(){
-    
+    draw() {
+
         // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
         ctx.drawImage(this.image, 0, 0, 32, 32, this.pX, this.pY, 128, 128)
     }
 
-    update(){
-    this.y = this.y + this.speed;
+    update() {
+        this.pY = this.pY + this.speed;
     }
 }
 
-    function spawnEntities(){
-        setInterval(() => {
-            
-        }
-    }
+
 
 
 function getRandomInt(max) {
@@ -231,3 +262,5 @@ function loadImages(sources, callback) {
         images[src].src = sources[src];
     }
 }
+
+
