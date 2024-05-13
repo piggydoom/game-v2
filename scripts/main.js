@@ -9,6 +9,7 @@ let oldTimeStamp = 0;
 let movingSpeed = 50;
 let timePassed = 0;
 let clouds = [];
+let cessnas = [];
 
 
 
@@ -72,7 +73,9 @@ function gameLoop(timeStamp) {
 
     });
 
-
+    cessnas.forEach((cessna) => {
+        cessna.draw();
+    })
 }
 //game logic loop
 function update(secondsPassed) {
@@ -84,6 +87,10 @@ function update(secondsPassed) {
     clouds.forEach((cloud) => {
         cloud.update();
         });
+
+        cessnas.forEach((cessna) => {
+            cessna.update();
+            });
 }
 
 
@@ -103,7 +110,14 @@ function startGame() {
 
        
             
-
+        setInterval(() => {
+            let w = 128;
+            let h = 128;
+            let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
+            let y = -100;
+            let speed = 5;
+            cessnas.push(new entity(images.cessna, w, h, x, y, speed));
+        }, 500);
 
         //spawn clouds
         setInterval(() => {
@@ -112,10 +126,17 @@ function startGame() {
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
             let y = -100;
             let speed = 5;
-            clouds.push(new entity(images.cloud1, w, h, x, y, speed));
-        }, 100);``
+            clouds.push(new entity(images.cloud1, w, h, x, y, speed, false));
+        }, 300);
 
-
+        setInterval(() => {
+            let w = 128;
+            let h = 128;
+            let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
+            let y = -100;
+            let speed = 5;
+            clouds.push(new entity(images.cloud2, w, h, x, y, speed));
+        }, 300);
 
     })
 }
