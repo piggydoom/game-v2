@@ -107,13 +107,13 @@ function startGame() {
 
         //spawn clouds
         setInterval(() => {
-            let w = 32;
-            let h = 32;
+            let w = 128;
+            let h = 128;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
             let y = -100;
             let speed = 5;
             clouds.push(new entity(images.cloud1, w, h, x, y, speed));
-        }, 100);
+        }, 100);``
 
 
 
@@ -229,7 +229,7 @@ class entity {
     draw() {
 
         // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-        ctx.drawImage(this.image, 0, 0, 32, 32, this.pX, this.pY, 128, 128)
+        ctx.drawImage(this.image, 0, 0, 128, 128, this.pX, this.pY, 128, 128)
     }
 
     update() {
