@@ -2,7 +2,7 @@ let playerPlane;
 let cloud1;
 // const planeImage = new Image();
 // const cloudImage = new Image();
-let sources = { plane: "styles/Images/plane.png", clouds: "styles/Images/clouds.png" };
+let sources = { plane: "styles/Images/plane.png", cloud1: "styles/Images/cloud1.png", cloud2: "styles/Images/cloud2.png", cessna: "styles/Images/cessna pixelart.png"};
 let ctx;
 let secondsPassed = 0;
 let oldTimeStamp = 0;
@@ -110,9 +110,9 @@ function startGame() {
             let w = 32;
             let h = 32;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
-            let y = Math.random() * Math.abs(myGameArea.canvas.height - h);
-            let speed = 25;
-            clouds.push(new entity(images.clouds, w, h, x, y, speed));
+            let y = -100;
+            let speed = 5;
+            clouds.push(new entity(images.cloud1, w, h, x, y, speed));
         }, 100);
 
 
@@ -213,13 +213,14 @@ function Player(image, width, height, pX, pY) {
 
 
 class entity {
-    constructor(img, width, height, pX, pY, speed) {
+    constructor(img, width, height, pX, pY, speed, collidable) {
         this.image = img;
         this.width = width;
         this.height = height;
         this.pX = pX;
         this.pY = pY;
         this.speed = speed;
+        this.collidable = collidable;
     }
 
 
