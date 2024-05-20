@@ -92,7 +92,7 @@ function update(secondsPassed) {
     //itterate over each cessna
     cessnas.forEach((cessna) => {
         cessna.update();
-        playerPlane.collision(cessna);
+        collision(playerPlane, cessna);
     });
 }
 
@@ -237,17 +237,17 @@ function Player(image, width, height, pX, pY) {
 
     }
 
-    function collision(object){
-        if (
-            this.pX + this.width >= object.pX &&  //check if player right hand side touches object left hand side
-            object.pX + object.width >= this.pX && //check if object right hand side touches player left hand side
-            this.pY + this.height >= object.pY && //check if player bottom side touches object top side
-            object.pY + objectHeight >= this.pY //check if player top side touches object bottom side
-        ) {
-            console.log("hit")
-        }
-    };
+};
 
+function collision(player, object) {
+    if (
+        player.pX + player.width >= object.pX &&  //check if player right hand side touches object left hand side
+        object.pX + object.width >= player.pX && //check if object right hand side touches player left hand side
+        player.pY + player.height >= object.pY && //check if player bottom side touches object top side
+        object.pY + objectHeight >= player.pY //check if player top side touches object bottom side
+    ) {
+        console.log("hit")
+    }
 };
 
 
