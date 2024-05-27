@@ -14,7 +14,6 @@ let cessnas = [];
 
 
 
-
 let myGameArea = {
     canvas: document.createElement("canvas"),
     start: function () {
@@ -50,6 +49,17 @@ function gameLoop(timeStamp) {
     secondsPassed = (timeStamp - oldTimeStamp) / 1000;
     oldTimeStamp = timeStamp;
 
+    myGameArea.frameNo++;
+
+
+    if (playerPlane.isDamaged = true) {
+
+
+        playerPlane.currentFrame++;
+        if (playerPlane.currentFrame > playerPlane.damageFrames.length) {
+            playerPlane.currentFrame = 0;
+        }
+    };
 
     myGameArea.clear();
 
@@ -92,7 +102,7 @@ function update(secondsPassed) {
     //itterate over each cessna
     cessnas.forEach((cessna) => {
         cessna.update();
-        playerPlane.collision(cessna);
+        collision(playerPlane, cessna);
     });
 }
 
@@ -190,12 +200,21 @@ function Player(image, width, height, pX, pY) {
     this.pX = pX;
     this.pY = pY;
     this.speed = 10; //10
-
-
+    this.damageFrames = [1, 2, 3, 4];
+    this.isDamaged = false;
+    this.currentFrame = 0;
 
     this.draw = function () {
-        // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-        ctx.drawImage(this.image, 0, 0, 88, 83, this.pX, this.pY, this.width, this.height);
+
+
+        if (this.isDamaged) {
+            // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+            ctx.drawImage(this.image, this.damageFrames[this.currentFrame] * 88, 0, 88, 83, this.pX, this.pY, this.width, this.height);
+        } else {
+
+            // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+            ctx.drawImage(this.image, 0, 0, 88, 83, this.pX, this.pY, this.width, this.height);
+        }
     }
 
     this.update = function (timePassed) {
@@ -237,16 +256,6 @@ function Player(image, width, height, pX, pY) {
 
     }
 
-    function collision(object){
-        if (
-            this.pX + this.width >= object.pX &&  //check if player right hand side touches object left hand side
-            object.pX + object.width >= this.pX && //check if object right hand side touches player left hand side
-            this.pY + this.height >= object.pY && //check if player bottom side touches object top side
-            object.pY + objectHeight >= this.pY //check if player top side touches object bottom side
-        ) {
-            console.log("hit")
-        }
-    };
 
 };
 
@@ -304,3 +313,14 @@ function loadImages(sources, callback) {
 }
 
 
+function collision(player, object) {
+    if (
+        player.pX + player.width >= object.pX &&  //check if player right hand side touches object left hand side
+        object.pX + object.width >= player.pX && //check if object right hand side touches player left hand side
+        player.pY + player.height >= object.pY && //check if player bottom side touches object top side
+        object.pY + object.height >= player.pY //check if player top side touches object bottom side
+    ) {
+        console.log("hit");
+        playerPlane.isDamaged = true;
+    }
+};
