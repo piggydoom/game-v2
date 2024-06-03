@@ -256,7 +256,7 @@ function Player(image, width, height, pX, pY) {
 
 
     }
-
+}
 
 function collision(player, object) {
     if (
@@ -333,4 +333,7 @@ function collision(player, object) {
         console.log("hit");
         playerPlane.isDamaged = true;
     }
-}};
+}
+
+
+// Test commit
