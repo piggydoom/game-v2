@@ -335,6 +335,4 @@ function collision(player, object) {
     }
 }
 
-
-// Test commit
-// Test two
+// COMMIT TEST 3
