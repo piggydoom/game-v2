@@ -10,7 +10,8 @@ let movingSpeed = 50;
 let timePassed = 0;
 let clouds = [];
 let cessnas = [];
-let cessnaSpeedMultiplier = [1, 2, 3]
+let cessnaSpeedMultiplier = [1, 5, 90];
+let speedMultiplierIndex;
 
 
 
@@ -52,11 +53,11 @@ function gameLoop(timeStamp) {
     myGameArea.frameNo++;
 
 
-   
+
     myGameArea.clear();
 
 
-
+    console.log(cessnaSpeedMultiplier[speedMultiplierIndex]);
 
 
 
@@ -95,7 +96,7 @@ function update(secondsPassed) {
     cessnas.forEach((cessna) => {
         cessna.update();
         collision(playerPlane, cessna);
-        }
+    }
     );
 }
 
@@ -179,6 +180,7 @@ function keyDown(event) {
 function keyUp(event) {
     let key = keyMap[event.keyCode];
     keyPress[key] = false;
+    cessnaSpeedMultiplier[1];
 }
 
 window.addEventListener("keydown", keyDown, false);
@@ -211,7 +213,6 @@ function Player(image, width, height, pX, pY) {
     }
 
     this.update = function () {
-        speedMultiplierIndex  = 1;
         const distance = this.speed;
         this.pX = Math.max(0, Math.min(myGameArea.canvas.width - this.width, this.pX));
         this.pY = Math.max(0, Math.min(myGameArea.canvas.height - this.height, this.pY));
@@ -250,12 +251,14 @@ function Player(image, width, height, pX, pY) {
         }
 
         if (playerPlane.isDamaged = true) {
-            playerPlane.currentFrame++;
+            if (myGameArea.frameNo % 10 == 0) {
+                playerPlane.currentFrame++;
+            }
             if (playerPlane.currentFrame >= playerPlane.damageFrames.length) {
                 playerPlane.currentFrame = 1;
             }
         };
-    
+
     }
 }
 
