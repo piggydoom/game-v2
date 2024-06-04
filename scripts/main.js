@@ -10,7 +10,7 @@ let movingSpeed = 50;
 let timePassed = 0;
 let clouds = [];
 let cessnas = [];
-
+let cessnaSpeedMultiplier = [1, 2, 3]
 
 
 
@@ -52,15 +52,7 @@ function gameLoop(timeStamp) {
     myGameArea.frameNo++;
 
 
-    if (playerPlane.isDamaged = true) {
-
-
-        playerPlane.currentFrame++;
-        if (playerPlane.currentFrame > playerPlane.damageFrames.length) {
-            playerPlane.currentFrame = 0;
-        }
-    };
-
+   
     myGameArea.clear();
 
 
@@ -103,8 +95,8 @@ function update(secondsPassed) {
     cessnas.forEach((cessna) => {
         cessna.update();
         collision(playerPlane, cessna);
-        collision(playerPlane, cessna);
-    });
+        }
+    );
 }
 
 
@@ -132,7 +124,7 @@ function startGame() {
             let h = 128;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
             let y = -100;
-            let speed = 1;
+            let speed = cessnaSpeedMultiplier[speedMultiplierIndex];
             cessnas.push(new entity(images.cessna, w, h, x, y, speed));
         }, 5000);
 
@@ -218,7 +210,8 @@ function Player(image, width, height, pX, pY) {
         }
     }
 
-    this.update = function (timePassed) {
+    this.update = function () {
+        speedMultiplierIndex  = 1;
         const distance = this.speed;
         this.pX = Math.max(0, Math.min(myGameArea.canvas.width - this.width, this.pX));
         this.pY = Math.max(0, Math.min(myGameArea.canvas.height - this.height, this.pY));
@@ -240,6 +233,7 @@ function Player(image, width, height, pX, pY) {
         }
 
         if (keyPress.up) {
+            speedMultiplierIndex = 2;
             this.pY -= distance;
             if (this.pY <= 0) {
                 this.pY = myGameArea.canvas.height - this.height;
@@ -248,13 +242,20 @@ function Player(image, width, height, pX, pY) {
         }
 
         if (keyPress.down) {
+            speedMultiplierIndex = 0;
             this.pY += distance;
             if (this.pY >= myGameArea.canvas.height - this.height) {
                 this.pY = 0;
             }
         }
 
-
+        if (playerPlane.isDamaged = true) {
+            playerPlane.currentFrame++;
+            if (playerPlane.currentFrame >= playerPlane.damageFrames.length) {
+                playerPlane.currentFrame = 1;
+            }
+        };
+    
     }
 }
 
