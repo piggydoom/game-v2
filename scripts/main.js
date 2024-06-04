@@ -10,8 +10,8 @@ let movingSpeed = 50;
 let timePassed = 0;
 let clouds = [];
 let cessnas = [];
-let cessnaSpeedMultiplier = [1, 2, 3]
-
+let cessnaSpeedMultiplier = [0, 2, 50];
+let speedMultiplierIndex = 2;
 
 
 let myGameArea = {
@@ -57,7 +57,7 @@ function gameLoop(timeStamp) {
 
 
 
-
+console.log("cessna speed is: ". cessnaSpeedMultiplier[speedMultiplierIndex]);
 
 
 
@@ -124,8 +124,7 @@ function startGame() {
             let h = 128;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
             let y = -100;
-            let speed = cessnaSpeedMultiplier[speedMultiplierIndex];
-            cessnas.push(new entity(images.cessna, w, h, x, y, speed));
+            cessnas.push(new entity(images.cessna, w, h, x, y, "cessna", true));
         }, 5000);
 
         //spawn clouds
@@ -134,8 +133,8 @@ function startGame() {
             let h = 128;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
             let y = -100;
-            let speed = 5;
-            clouds.push(new entity(images.cloud1, w, h, x, y, speed, false));
+         
+            clouds.push(new entity(images.cloud1, w, h, x, y, "cloud", false));
         }, 300);
 
         setInterval(() => {
@@ -143,8 +142,8 @@ function startGame() {
             let h = 128;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
             let y = -100;
-            let speed = 5;
-            clouds.push(new entity(images.cloud2, w, h, x, y, speed));
+    
+            clouds.push(new entity(images.cloud2, w, h, x, y, "cloud", false));
         }, 300);
 
     })
@@ -272,14 +271,19 @@ function collision(player, object) {
 
 
 class entity {
-    constructor(img, width, height, pX, pY, speed, collidable) {
+    constructor(img, width, height, pX, pY, type, collidable) {
         this.image = img;
         this.width = width;
         this.height = height;
         this.pX = pX;
         this.pY = pY;
-        this.speed = speed;
+      
         this.collidable = collidable;
+        if(this.type == "cessna"){
+            this.speed = cessnaSpeedMultiplier[speedMultiplierIndex];
+        } else{
+            this.speed = 5;
+        }
     }
 
 
