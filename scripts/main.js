@@ -2,7 +2,7 @@ let playerPlane;
 let cloud1;
 // const planeImage = new Image();
 // const cloudImage = new Image();
-let sources = { plane: "styles/Images/plane.png", cloud1: "styles/Images/cloud1.png", cloud2: "styles/Images/cloud2.png", cessna: "styles/Images/cessna pixelart.png" };
+let sources = { plane: "styles/Images/plane.png", cloud1: "styles/Images/cloud1.png", cloud2: "styles/Images/cloud2.png"/*, cessna: "styles/Images/cessna pixelart.png"*/ };
 let ctx;
 let secondsPassed = 0;
 let oldTimeStamp = 0;
@@ -10,6 +10,7 @@ let movingSpeed = 50;
 let timePassed = 0;
 let clouds = [];
 let cessnas = [];
+let cessnaAudio = new Audio("../styles/audio/cessna-audio.wav");
 let cessnaSpeedMultiplier = [1, 5, 90];
 let speedMultiplierIndex;
 
@@ -98,6 +99,7 @@ function update(secondsPassed) {
         collision(playerPlane, cessna);
     }
     );
+
 }
 
 
@@ -109,8 +111,8 @@ function startGame() {
 
     loadImages(sources, function (images) {
         playerPlane = new Player(images.plane,
-            176, //width 
-            166, //height
+            128, //width 
+            128, //height
             Math.ceil(myGameArea.canvas.width / 2 - 64), //Xpos
             Math.ceil(myGameArea.canvas.height * 0.7)); //Ypos
 
@@ -120,13 +122,14 @@ function startGame() {
 
 
         //spawn cessnas
-        setInterval(() => {
-            let w = 128;
-            let h = 128;
-            let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
-            let y = -100;
-            cessnas.push(new entity(images.cessna, w, h, x, y, "cessna", true));
-        }, 5000);
+        // setInterval(() => {
+        //     cessnaAudio.play();
+        //     let w = 128;
+        //     let h = 128;
+        //     let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
+        //     let y = -100;
+        //     cessnas.push(new entity(images.cessna, w, h, x, y, "cessna", true));
+        // }, 5000);
 
         //spawn clouds
         setInterval(() => {
@@ -194,7 +197,7 @@ function Player(image, width, height, pX, pY) {
     this.pX = pX;
     this.pY = pY;
     this.speed = 10; //10
-    this.damageFrames = [1, 2, 3, 4];
+    this.damageFrames = [1, 2, 3, 4, 5];
     this.isDamaged = false;
     this.currentFrame = 0;
 
@@ -203,7 +206,7 @@ function Player(image, width, height, pX, pY) {
 
         if (this.isDamaged) {
             // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-            ctx.drawImage(this.image, this.damageFrames[this.currentFrame] * 88, 0, 88, 83, this.pX, this.pY, this.width, this.height);
+            ctx.drawImage(this.image, this.damageFrames[this.currentFrame] * 88, 0, 128, 128, this.pX, this.pY, this.width, this.height);
         } else {
 
             // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
