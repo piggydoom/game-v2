@@ -11,7 +11,7 @@ let timePassed = 0;
 let clouds = [];
 let f16s = [];
 let cessnaAudio = new Audio("../styles/audio/cessna-audio.wav");
-let f16SpeedMultiplier = [1, 5, 90];
+let f16SpeedMultiplier = [2, 3, 6];
 let speedMultiplierIndex;
 
 
@@ -59,7 +59,7 @@ function gameLoop(timeStamp) {
     myGameArea.clear();
 
 
-    console.log(f16SpeedMultiplier[speedMultiplierIndex]);
+    // console.log(f16SpeedMultiplier[speedMultiplierIndex]);
 
 
 
@@ -183,7 +183,8 @@ function keyDown(event) {
 function keyUp(event) {
     let key = keyMap[event.keyCode];
     keyPress[key] = false;
-    f16SpeedMultiplier[1];
+    speedMultiplierIndex = 1;
+
 }
 
 window.addEventListener("keydown", keyDown, false);
@@ -223,34 +224,38 @@ function Player(image, width, height, pX, pY) {
 
 
         if (keyPress.left) {
+            cessnaAudio.play();
             this.pX -= distance;
-            if (this.pX <= 0) {
-                this.pX = myGameArea.canvas.width - this.width;
-            }
+            // if (this.pX <= 0) {
+            //     this.pX = myGameArea.canvas.width - this.width;
+            // }
         }
 
         if (keyPress.right) {
+            cessnaAudio.play();
             this.pX += distance;
-            if (this.pX >= myGameArea.canvas.width - this.width) {
-                this.pX = 0;
-            }
+            // if (this.pX >= myGameArea.canvas.width - this.width) {
+            //     this.pX = 0;
+            // }
         }
 
         if (keyPress.up) {
+            cessnaAudio.play();
             speedMultiplierIndex = 2;
             this.pY -= distance;
-            if (this.pY <= 0) {
-                this.pY = myGameArea.canvas.height - this.height;
+            // if (this.pY <= 0) {
+            //     this.pY = myGameArea.canvas.height - this.height;
 
-            }
+            // }
         }
 
         if (keyPress.down) {
+            cessnaAudio.play();
             speedMultiplierIndex = 0;
             this.pY += distance;
-            if (this.pY >= myGameArea.canvas.height - this.height) {
-                this.pY = 0;
-            }
+            // if (this.pY >= myGameArea.canvas.height - this.height) {
+            //     this.pY = 0;
+            // }
         }
 
         if (playerPlane.isDamaged) {
@@ -272,7 +277,7 @@ function collision(player, object) {
         player.pY + player.height >= object.pY && //check if player bottom side touches object top side
         object.pY + objectHeight >= player.pY //check if player top side touches object bottom side
     ) {
-        console.log("hit")
+        // console.log("hit")
     }
 };
 
@@ -286,11 +291,7 @@ class entity {
         this.pY = pY;
 
         this.collidable = collidable;
-        if (this.type == "f16") {
-            this.speed = f16SpeedMultiplier[speedMultiplierIndex];
-        } else {
-            this.speed = 5;
-        }
+        
     }
 
 
@@ -303,7 +304,8 @@ class entity {
     }
 
     update() {
-        this.pY = this.pY + this.speed;
+        this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex];
+      
     }
 }
 
@@ -342,7 +344,7 @@ function collision(player, object) {
         player.pY + player.height >= object.pY && //check if player bottom side touches object top side
         object.pY + object.height >= player.pY //check if player top side touches object bottom side
     ) {
-        console.log("hit");
+        // console.log("hit");
         playerPlane.isDamaged = true;
     }
 }
