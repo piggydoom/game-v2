@@ -2,6 +2,7 @@
     font-family: funRaiser;
     src: url(../fonts/FunRaiser-yogZ.ttf);
 }
+
 body {
     margin: 0;
 }
@@ -27,11 +28,36 @@ li a {
     color: yellow;
 }
 
-li a:hover{
+li a:hover {
     color: rgb(0, 200, 255);
     background-color: rgb(204, 0, 255);
 }
 
-.active{
+.active {
     background-color: rgb(17, 0, 255);
 }
+
+#startScreenContainer {
+    width: 100vw;
+    height: 90vh;
+    position:relative;
+}
+
+#startScreenText{
+    text-align: center;
+    margin: 0;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+@keyframes fade-out {
+    from {
+      opacity: 100%;
+    }
+    to {
+      opacity: 0%;
+    }
+  }

@@ -1,21 +1,29 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Plane mayhem</title>
-        <link rel="stylesheet" href="styles/CSS/style.css">
-    </head>
-    <body onload="startGame()">
-        
-        <nav>
-            <ul>
 
-                <li><a class="active" href="index.html">home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        <div id="gameCanvas"></div>
-        <script src="scripts/main.js"></script>
-    </body>
+<head>
+    <title>Plane mayhem</title>
+    <link rel="stylesheet" href="styles/CSS/style.css">
+</head>
+
+<body>
+
+    <nav>
+        <ul>
+
+            <li><a class="active" href="index.html">home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <div id="startScreenContainer">
+        <div id="startScreenText">
+            <h1>Plane mayhem</h1>
+            <button onclick="startGame()">Start game</button>
+        </div>
+    </div>
+    <div id="gameCanvas"></div>
+    <script src="scripts/main.js"></script>
+</body>
 
 </html>

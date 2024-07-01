@@ -10,11 +10,10 @@ let movingSpeed = 50;
 let timePassed = 0;
 let clouds = [];
 let f16s = [];
-let cessnaAudio = new Audio("../styles/audio/cessna-audio.wav");
 const loopingCessnaAudio = new Audio("../styles/audio/cessna-looping.wav");
 let f16SpeedMultiplier = [2, 3, 6];
 let speedMultiplierIndex;
-
+const startScreen = document.getElementById("startScreenContainer");
 
 
 let myGameArea = {
@@ -108,7 +107,13 @@ function update(secondsPassed) {
 
 //waits for page body to load then runs startGame
 function startGame() {
-    myGameArea.start();
+    startScreen.style.animation = "fade-out 3s forwards"
+
+    setInterval(() => {
+        startScreen.style.display = "none"; 
+        myGameArea.start();
+    }, 3000);
+   
     ctx = myGameArea.context;
 
     loopingCessnaAudio.volume = 0.25;
@@ -229,7 +234,6 @@ function Player(image, width, height, pX, pY) {
 
 
         if (keyPress.left) {
-            cessnaAudio.play();
             this.pX -= distance;
             // if (this.pX <= 0) {
             //     this.pX = myGameArea.canvas.width - this.width;
@@ -237,7 +241,6 @@ function Player(image, width, height, pX, pY) {
         }
 
         if (keyPress.right) {
-            cessnaAudio.play();
             this.pX += distance;
             // if (this.pX >= myGameArea.canvas.width - this.width) {
             //     this.pX = 0;
@@ -245,7 +248,6 @@ function Player(image, width, height, pX, pY) {
         }
 
         if (keyPress.up) {
-            cessnaAudio.play();
             speedMultiplierIndex = 2;
             this.pY -= distance;
             // if (this.pY <= 0) {
@@ -255,7 +257,6 @@ function Player(image, width, height, pX, pY) {
         }
 
         if (keyPress.down) {
-            cessnaAudio.play();
             speedMultiplierIndex = 0;
             this.pY += distance;
             // if (this.pY >= myGameArea.canvas.height - this.height) {
