@@ -11,6 +11,7 @@ let timePassed = 0;
 let clouds = [];
 let f16s = [];
 let cessnaAudio = new Audio("../styles/audio/cessna-audio.wav");
+const loopingCessnaAudio = new Audio("../styles/audio/cessna-looping.wav");
 let f16SpeedMultiplier = [2, 3, 6];
 let speedMultiplierIndex;
 
@@ -110,6 +111,8 @@ function startGame() {
     myGameArea.start();
     ctx = myGameArea.context;
 
+    loopingCessnaAudio.volume = 0.25;
+
     loadImages(sources, function (images) {
         playerPlane = new Player(images.plane,
             128, //width 
@@ -130,7 +133,7 @@ function startGame() {
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
             let y = -100;
             f16s.push(new entity(images.f16, w, h, x, y, "f16", true));
-        }, 5000);
+        }, getRandomInt(13000)+3000);
 
         //spawn clouds
         setInterval(() => {
@@ -178,13 +181,15 @@ let keyMap = {
 function keyDown(event) {
     let key = keyMap[event.keyCode];
     keyPress[key] = true;
+    loopingCessnaAudio.autoplay = true;
+    loopingCessnaAudio.loop = true;
 }
 
 function keyUp(event) {
     let key = keyMap[event.keyCode];
     keyPress[key] = false;
     speedMultiplierIndex = 1;
-
+   
 }
 
 window.addEventListener("keydown", keyDown, false);
