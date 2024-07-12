@@ -14,6 +14,7 @@ const loopingCessnaAudio = new Audio("../styles/audio/cessna-looping.wav");
 let f16SpeedMultiplier = [2, 3, 6];
 let speedMultiplierIndex;
 const startScreen = document.getElementById("startScreenContainer");
+const gameCanvasDiv = document.getElementById("gameCanvas");
 
 
 let myGameArea = {
@@ -107,11 +108,12 @@ function update(secondsPassed) {
 
 //waits for page body to load then runs startGame
 function startGame() {
-    startScreen.style.animation = "fade-out 3s forwards"
-
+    startScreen.style.animation = "fade-out 3s forwards";
+    gameCanvasDiv.style.display = "none";
+    myGameArea.start();
     setInterval(() => {
         startScreen.style.display = "none"; 
-        myGameArea.start();
+        gameCanvasDiv.style.display = "block";
     }, 3000);
    
     ctx = myGameArea.context;
