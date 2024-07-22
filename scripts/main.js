@@ -23,7 +23,7 @@ let myGameArea = {
 
         //sets the canvas width + height
         this.canvas.width = 100 * window.innerWidth / 100;
-        this.canvas.height = 90 * window.innerHeight / 100;
+        this.canvas.height = 100 * window.innerHeight / 100;
 
         //set canvas contex to 2d 
         this.context = this.canvas.getContext("2d");
