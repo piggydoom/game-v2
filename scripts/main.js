@@ -15,7 +15,7 @@ let f16SpeedMultiplier = [2, 3, 6];
 let speedMultiplierIndex;
 const startScreen = document.getElementById("startScreenContainer");
 const gameCanvasDiv = document.getElementById("gameCanvas");
-
+let playerDamageTimer = 0;
 
 let myGameArea = {
     canvas: document.createElement("canvas"),
@@ -112,10 +112,10 @@ function startGame() {
     gameCanvasDiv.style.display = "none";
     myGameArea.start();
     setInterval(() => {
-        startScreen.style.display = "none"; 
+        startScreen.style.display = "none";
         gameCanvasDiv.style.display = "block";
     }, 3000);
-   
+
     ctx = myGameArea.context;
 
     loopingCessnaAudio.volume = 0.25;
@@ -140,7 +140,7 @@ function startGame() {
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
             let y = -100;
             f16s.push(new entity(images.f16, w, h, x, y, "f16", true));
-        }, getRandomInt(13000)+3000);
+        }, getRandomInt(13000) + 3000);
 
         //spawn clouds
         setInterval(() => {
@@ -196,7 +196,7 @@ function keyUp(event) {
     let key = keyMap[event.keyCode];
     keyPress[key] = false;
     speedMultiplierIndex = 1;
-   
+
 }
 
 window.addEventListener("keydown", keyDown, false);
@@ -214,11 +214,14 @@ function Player(image, width, height, pX, pY) {
     this.damageFrames = [1, 2, 3, 4, 5];
     this.isDamaged = false;
     this.currentFrame = 0;
+    this.recentlyDamaged = false;
 
     this.draw = function () {
 
-
-        if (this.isDamaged) {
+        if (this.recentlyDamaged){
+           return; 
+        }
+        else if (this.isDamaged) {
             // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
             ctx.drawImage(this.image, this.damageFrames[this.currentFrame] * 128, 0, 128, 128, this.pX, this.pY, this.width, this.height);
         } else {
@@ -266,28 +269,30 @@ function Player(image, width, height, pX, pY) {
             // }
         }
 
-        if (playerPlane.isDamaged) {
+        if (this.isDamaged) {
             if (myGameArea.frameNo % 10 == 0) {
-                playerPlane.currentFrame++;
+                this.currentFrame++;
             }
-            if (playerPlane.currentFrame >= playerPlane.damageFrames.length) {
-                playerPlane.currentFrame = 1;
+            if (this.currentFrame >= this.damageFrames.length) {
+                this.currentFrame = 1;
             }
         };
+        if(this.recentlyDamaged){
+            playerDamageTimer++;
+            if(playerDamageTimer < 180){
+            if(myGameArea.frameNo %15 == 0){
+                this.currentFrame = 5;
+            } else{
+                this.currentFrame = 1;
+                
+            }
+            playerDamageTimer = 0;
+                this.recentlyDamaged = false;
+            };         
+        }
 
     }
 }
-
-function collision(player, object) {
-    if (
-        player.pX + player.width >= object.pX &&  //check if player right hand side touches object left hand side
-        object.pX + object.width >= player.pX && //check if object right hand side touches player left hand side
-        player.pY + player.height >= object.pY && //check if player bottom side touches object top side
-        object.pY + objectHeight >= player.pY //check if player top side touches object bottom side
-    ) {
-        // console.log("hit")
-    }
-};
 
 
 class entity {
@@ -299,7 +304,7 @@ class entity {
         this.pY = pY;
 
         this.collidable = collidable;
-        
+
     }
 
 
@@ -313,7 +318,7 @@ class entity {
 
     update() {
         this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex];
-      
+
     }
 }
 
@@ -346,14 +351,16 @@ function loadImages(sources, callback) {
 
 
 function collision(player, object) {
+    
     if (
         player.pX + player.width >= object.pX &&  //check if player right hand side touches object left hand side
         object.pX + object.width >= player.pX && //check if object right hand side touches player left hand side
         player.pY + player.height >= object.pY && //check if player bottom side touches object top side
         object.pY + object.height >= player.pY //check if player top side touches object bottom side
     ) {
-        // console.log("hit");
         playerPlane.isDamaged = true;
+        playerPlane.recentlyDamaged = true;
+
     }
 }
 
