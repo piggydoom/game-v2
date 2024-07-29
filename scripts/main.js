@@ -23,7 +23,7 @@ let myGameArea = {
 
         //sets the canvas width + height
         this.canvas.width = 100 * window.innerWidth / 100;
-        this.canvas.height = 100 * window.innerHeight / 100;
+        this.canvas.height = 95 * window.innerHeight / 100;
 
         //set canvas contex to 2d 
         this.context = this.canvas.getContext("2d");
@@ -290,7 +290,7 @@ function Player(image, width, height, pX, pY) {
             // }
         }
 
-        if (mobileTouch.isPressed) { 
+        if (mobileTouch.isPressed) {
             speedMultiplierIndex = 1;
             this.pY = mobileTouch.yPos;
             this.pX = mobileTouch.xPos;
