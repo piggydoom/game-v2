@@ -47,6 +47,12 @@ li a:hover {
     width: 100vw;
     height: 90vh;
     position:relative;
+    background-image: url("../Images/background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: 80%, center;
+
 }
 
 #startScreenText{
