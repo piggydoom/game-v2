@@ -23,7 +23,7 @@ let myGameArea = {
 
         //sets the canvas width + height
         this.canvas.width = 100 * window.innerWidth / 100;
-        this.canvas.height = 90 * window.innerHeight / 100;
+        this.canvas.height = 100 * window.innerHeight / 100;
 
         //set canvas contex to 2d 
         this.context = this.canvas.getContext("2d");
@@ -231,8 +231,16 @@ function Player(image, width, height, pX, pY) {
 
     this.draw = function () {
 
-        if (this.recentlyDamaged){
-           return; 
+        if (this.recentlyDamaged) {
+            playerDamageTimer++;
+            if (playerDamageTimer < 360) {
+                if (myGameArea.frameNo % 10) {
+                    ctx.drawImage(this.image, this.damageFrames[this.currentFrame] * 128, 0, 128, 128, this.pX, this.pY, this.width, this.height);
+                }
+            } else {
+                this.recentlyDamaged = false;
+                playerDamageTimer = 0;
+            }
         }
         else if (this.isDamaged) {
             // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
@@ -295,19 +303,22 @@ function Player(image, width, height, pX, pY) {
                 this.currentFrame = 1;
             }
         };
-        if(this.recentlyDamaged){
-            playerDamageTimer++;
-            if(playerDamageTimer < 180){
-            if(myGameArea.frameNo %15 == 0){
-                this.currentFrame = 5;
-            } else{
-                this.currentFrame = 1;
-                
-            }
-            playerDamageTimer = 0;
-                this.recentlyDamaged = false;
-            };         
-        }
+
+        // if (this.recentlyDamaged) {
+        //     playerDamageTimer++;
+        //     console.log(playerDamageTimer);
+        //     if (playerDamageTimer < 180) {
+
+        //         if (myGameArea.frameNo % 15 == 0) {
+        //             this.currentFrame = 5;
+        //         } else {
+        //             this.currentFrame = 1;
+
+        //         }
+        //         playerDamageTimer = 0;
+        //         this.recentlyDamaged = false;
+        //     };
+        // }
 
     }
 }
@@ -369,7 +380,7 @@ function loadImages(sources, callback) {
 
 
 function collision(player, object) {
-    
+
     if (
         player.pX + player.width >= object.pX &&  //check if player right hand side touches object left hand side
         object.pX + object.width >= player.pX && //check if object right hand side touches player left hand side
