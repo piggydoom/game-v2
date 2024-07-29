@@ -166,7 +166,7 @@ function startGame() {
 
 
 let mobileTouch = {
-    yPos, xPos, isPressed: false,
+    yPos: 0, xPos: 0, isPressed: false,
 
 };
 
@@ -203,7 +203,7 @@ function keyUp(event) {
 }
 
 function touchHandler(event) {
-    if(event.touches) {
+    if (event.touches) {
         mobileTouch.xPos = event.touches[0].pageX - canvas.offsetLeft - playerPlane.width / 2;
         mobileTouch.yPos = event.touches[0].pageY - canvas.offsetTop - playerPlane.height / 2;
         mobileTouch.isPressed = true;
