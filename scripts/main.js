@@ -204,8 +204,8 @@ function keyUp(event) {
 
 function touchHandler(event) {
     if (event.touches) {
-        mobileTouch.xPos = event.touches[0].pageX - canvas.offsetLeft - playerPlane.width / 2;
-        mobileTouch.yPos = event.touches[0].pageY - canvas.offsetTop - playerPlane.height / 2;
+        mobileTouch.xPos = event.touches[0].pageX - myGameArea.canvas.offsetLeft - 128 / 2;
+        mobileTouch.yPos = event.touches[0].pageY - myGameArea.canvas.offsetTop - 128 / 2;
         mobileTouch.isPressed = true;
     }
 }
@@ -290,7 +290,8 @@ function Player(image, width, height, pX, pY) {
             // }
         }
 
-        if (mobileTouch.isPressed) {
+        if (mobileTouch.isPressed) { 
+            speedMultiplierIndex = 1;
             this.pY = mobileTouch.yPos;
             this.pX = mobileTouch.xPos;
         }
