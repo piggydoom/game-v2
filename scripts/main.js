@@ -165,7 +165,10 @@ function startGame() {
 }
 
 
+let mobileTouch = {
+    yPos, xPos, isPressed: false,
 
+};
 
 
 
@@ -190,7 +193,7 @@ function keyDown(event) {
     keyPress[key] = true;
     loopingCessnaAudio.autoplay = true;
     loopingCessnaAudio.loop = true;
-}
+};
 
 function keyUp(event) {
     let key = keyMap[event.keyCode];
@@ -199,8 +202,18 @@ function keyUp(event) {
 
 }
 
+function touchHandler(event) {
+    if(event.touches) {
+        mobileTouch.xPos = event.touches[0].pageX - canvas.offsetLeft - playerPlane.width / 2;
+        mobileTouch.yPos = event.touches[0].pageY - canvas.offsetTop - playerPlane.height / 2;
+        mobileTouch.isPressed = true;
+    }
+}
+
 window.addEventListener("keydown", keyDown, false);
 window.addEventListener("keyup", keyUp, false);
+window.addEventListener("touchstart", touchHandler);
+window.addEventListener("touchmove", touchHandler);
 
 
 function Player(image, width, height, pX, pY) {
@@ -267,6 +280,11 @@ function Player(image, width, height, pX, pY) {
             // if (this.pY >= myGameArea.canvas.height - this.height) {
             //     this.pY = 0;
             // }
+        }
+
+        if (mobileTouch.isPressed) {
+            this.pY = mobileTouch.yPos;
+            this.pX = mobileTouch.xPos;
         }
 
         if (this.isDamaged) {
