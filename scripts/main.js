@@ -83,7 +83,12 @@ function gameLoop(timeStamp) {
 
     f16s.forEach((f16) => {
         f16.draw();
-    })
+    });
+
+    su27s.forEach((su27) => {
+        su27.draw();
+    });
+
 }
 //game logic loop
 function update(secondsPassed) {
@@ -153,13 +158,14 @@ function startGame() {
         
         //spawn su27
         setInterval(() => {
-          
+            console.log("test");
             let w = 128;
             let h = 197;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
             let y = -100;
             su27s.push(new entity(images.su27, w, h, x, y, "su27", true));
         }, getRandomInt(17000) + 3000);
+        
         
         
         
@@ -364,7 +370,7 @@ class entity {
     draw() {
 
         // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-        ctx.drawImage(this.image, 0, 0, 128, 128, this.pX, this.pY, 128, 128)
+        ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height)
     }
 
     update(speed) {
