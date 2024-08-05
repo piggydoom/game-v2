@@ -2,7 +2,7 @@ let playerPlane;
 let cloud1;
 // const planeImage = new Image();
 // const cloudImage = new Image();
-let sources = { plane: "styles/Images/plane.png", cloud1: "styles/Images/cloud1.png", cloud2: "styles/Images/cloud2.png", f16: "styles/Images/f16.png" };
+let sources = { plane: "styles/Images/plane.png", cloud1: "styles/Images/cloud1.png", cloud2: "styles/Images/cloud2.png", f16: "styles/Images/f16.png", su27: "styles/Images/su27.png"};
 let ctx;
 let secondsPassed = 0;
 let oldTimeStamp = 0;
@@ -10,12 +10,14 @@ let movingSpeed = 50;
 let timePassed = 0;
 let clouds = [];
 let f16s = [];
+let su27s = [];
 const loopingCessnaAudio = new Audio("../styles/audio/cessna-looping.wav");
 let f16SpeedMultiplier = [2, 3, 6];
 let speedMultiplierIndex;
 const startScreen = document.getElementById("startScreenContainer");
 const gameCanvasDiv = document.getElementById("gameCanvas");
 let playerDamageTimer = 0;
+
 
 let myGameArea = {
     canvas: document.createElement("canvas"),
@@ -91,17 +93,22 @@ function update(secondsPassed) {
 
 
     clouds.forEach((cloud) => {
-        cloud.update();
+        cloud.update(2);
     });
 
 
     //itterate over each f16 and apply collision
     f16s.forEach((f16) => {
-        f16.update();
+        f16.update(5);
         collision(playerPlane, f16);
     }
     );
 
+    su27s.forEach((su27) => {
+        su27.update(7);
+        collision(playerPlane, su27);
+    }
+    );
 }
 
 
@@ -134,14 +141,28 @@ function startGame() {
 
         //spawn f16s
         setInterval(() => {
-            // cessnaAudio.play();
+        
             let w = 76;
             let h = 128;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
             let y = -100;
             f16s.push(new entity(images.f16, w, h, x, y, "f16", true));
         }, getRandomInt(13000) + 3000);
-
+        
+        
+        
+        //spawn su27
+        setInterval(() => {
+          
+            let w = 128;
+            let h = 197;
+            let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
+            let y = -100;
+            su27s.push(new entity(images.su27, w, h, x, y, "su27", true));
+        }, getRandomInt(17000) + 3000);
+        
+        
+        
         //spawn clouds
         setInterval(() => {
             let w = 128;
@@ -346,8 +367,8 @@ class entity {
         ctx.drawImage(this.image, 0, 0, 128, 128, this.pX, this.pY, 128, 128)
     }
 
-    update() {
-        this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex];
+    update(speed) {
+        this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
 
     }
 }
