@@ -8,10 +8,13 @@ body {
   place-content: center;
 }
 
-.health{
-  z-index: 10;
+.health-container{
   position: absolute;
-  float: left;
+  top: 50px;
+  left: 50px;
+}
+.health{
+
 }
 
 .btn {
