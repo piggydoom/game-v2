@@ -8,6 +8,12 @@ body {
   place-content: center;
 }
 
+.health{
+  z-index: 10;
+  position: absolute;
+  float: left;
+}
+
 .btn {
   background: hsl(var(--hue), 98%, 80%);
   border: none;
