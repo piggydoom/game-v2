@@ -21,7 +21,7 @@
         <div id="startScreenText">
             <h1>Plane mayhem</h1>
 
-            <button type="button" class="btn btn--red"  onclick="startGame()">
+            <button type="button" class="btn btn--red" onclick="startGame()">
                 <span class="btn__txt">Start Game</span>
                 <i class="btn__bg" aria-hidden="true"></i>
                 <i class="btn__bg" aria-hidden="true"></i>
@@ -33,9 +33,11 @@
     </div>
 
     <div id="health-container">
-    <!--health bar-->
-    <label for="health">Downloading progress:</label>
-    <progress id="health" value="100" max="100"> 32% </progress>
+        <!--health bar-->
+        <label for="health">health:</label>
+        <div id="health-border">
+            <div id="health-bar"></div>
+        </div>
     </div>
 
     <div id="gameCanvas"></div>
