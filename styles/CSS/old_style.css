@@ -13,6 +13,22 @@ html, body {
     margin: 0; height: 100%; overflow: hidden
 }
 
+
+#health-container {
+	position: absolute !important;
+	top: 80px;
+	left: 50px;
+}
+
+#health { 
+    background-color: #333;
+  width: 300px;
+  height: 30px;
+  transform: skew(30deg);
+  font-family: 'Orbitron', monospace;
+}
+
+
 ul {
     background-color: rgb(255, 0, 217);
     overflow: hidden;

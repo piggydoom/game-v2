@@ -1,45 +1,40 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Plane mayhem</title>
-    <link rel="icon" type="image/x-icon" href="styles\Images\icon.png">
-    <link rel="stylesheet" href="styles/CSS/style.css">
-</head>
+    <link rel="icon" type="image/x-icon" href="styles\Images\icon.png" />
+    <link rel="stylesheet" href="styles/CSS/style.css" />
+  </head>
 
-<body>
-
+  <body>
     <nav>
-        <ul>
-
-            <li><a class="active" href="index.html">home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
+      <ul>
+        <li><a class="active" href="index.html">home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
     </nav>
     <div id="startScreenContainer">
-        <div id="startScreenText">
-            <h1>Plane mayhem</h1>
+      <div id="startScreenText">
+        <h1>Plane mayhem</h1>
 
-            <button type="button" class="btn btn--red"  onclick="startGame()">
-                <span class="btn__txt">Start Game</span>
-                <i class="btn__bg" aria-hidden="true"></i>
-                <i class="btn__bg" aria-hidden="true"></i>
-                <i class="btn__bg" aria-hidden="true"></i>
-                <i class="btn__bg" aria-hidden="true"></i>
-            </button>
-
-        </div>
+        <button type="button" class="btn btn--red" onclick="startGame()">
+          <span class="btn__txt">Start Game</span>
+          <i class="btn__bg" aria-hidden="true"></i>
+          <i class="btn__bg" aria-hidden="true"></i>
+          <i class="btn__bg" aria-hidden="true"></i>
+          <i class="btn__bg" aria-hidden="true"></i>
+        </button>
+      </div>
     </div>
 
     <div id="health-container">
-    <!--health bar-->
-    <label for="health">Downloading progress:</label>
-    <progress id="health" value="100" max="100"> 32% </progress>
+      <!--health bar-->
+      <label for="health">Downloading progress:</label>
+      <div id="health" value="100" max="100">32%</div>
     </div>
 
     <div id="gameCanvas"></div>
     <script src="scripts/main.js"></script>
-</body>
-
+  </body>
 </html>
