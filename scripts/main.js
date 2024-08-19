@@ -17,7 +17,8 @@ let speedMultiplierIndex;
 const startScreen = document.getElementById("startScreenContainer");
 const gameCanvasDiv = document.getElementById("gameCanvas");
 let playerDamageTimer = 0;
-
+let healthBar = document.getElementById("health-bar");
+let currentHealth = 100;
 
 let myGameArea = {
     canvas: document.createElement("canvas"),
@@ -417,8 +418,8 @@ function collision(player, object) {
     ) {
         playerPlane.isDamaged = true;
         playerPlane.recentlyDamaged = true;
-
+        currentHealth = currentHealth -10;
+        healthBar.style.width = currentHealth + "%";
     }
 }
 
-// COMMIT TEST 3

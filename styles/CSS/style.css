@@ -8,15 +8,6 @@ body {
   place-content: center;
 }
 
-#health-container{
-  position: absolute;
-  top: 50px;
-  left: 50px;
-}
-#health{
-  background: green;
-}
-
 .btn {
   background: hsl(var(--hue), 98%, 80%);
   border: none;
@@ -55,7 +46,11 @@ body {
 .btn__txt {
   position: relative;
   z-index: 2;
+  font-family: sunsetClub;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
+
 .btn__bg {
   background: hsl(var(--hueBg), 98%, 80%);
   border-radius: 50%;
