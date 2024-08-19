@@ -8,6 +8,15 @@ body {
   place-content: center;
 }
 
+#health-container{
+  position: absolute;
+  top: 50px;
+  left: 50px;
+}
+#health{
+  background: green;
+}
+
 .btn {
   background: hsl(var(--hue), 98%, 80%);
   border: none;

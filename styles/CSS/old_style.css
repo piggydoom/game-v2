@@ -81,6 +81,25 @@ li a:hover {
     transform: translateY(-50%);
 }
 
+#health-container{
+    position: absolute;
+    top: 80px;
+    left: 30px;
+}
+
+#health-border{
+    width: 200px;
+    border: 2px solid rgb(12, 138, 12);
+    display: inline-block;
+    height: 30px;
+}
+
+#health-bar{
+    width: 50%;
+    height: 100%;
+    background-color: limegreen;
+}
+
 @keyframes fade-out {
     from {
       opacity: 100%;
