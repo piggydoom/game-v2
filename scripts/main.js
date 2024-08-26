@@ -1,8 +1,8 @@
 let playerPlane;
 let cloud1;
-// const planeImage = new Image();
+// const planeImage = new Image(); 
 // const cloudImage = new Image();
-let sources = { plane: "styles/Images/plane.png", cloud1: "styles/Images/cloud1.png", cloud2: "styles/Images/cloud2.png", f16: "styles/Images/f16.png", su27: "styles/Images/su27.png"};
+let sources = { plane: "styles/Images/plane.png", cloud1: "styles/Images/cloud1.png", cloud2: "styles/Images/cloud2.png", f16: "styles/Images/f16.png", su27: "styles/Images/su27.png", explosion: "styles/Images/planeExplosion.png",};
 let ctx;
 let secondsPassed = 0;
 let oldTimeStamp = 0;
@@ -360,9 +360,9 @@ class entity {
         this.height = height;
         this.pX = pX;
         this.pY = pY;
-
+        this.isDamaged = false;
         this.collidable = collidable;
-
+        this.explosionFrame = 0;
     }
 
 
@@ -370,6 +370,10 @@ class entity {
 
     draw() {
 
+        if(this.isDamaged){
+            ctx.drawImage(images.explosion, explosionFrame, 0, this.width, this.height, this.pX, this.pY, this.width, this.height)
+            this.explosionFrame++;
+        }
         // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
         ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height)
     }
@@ -420,6 +424,7 @@ function collision(player, object) {
         playerPlane.recentlyDamaged = true;
         currentHealth = currentHealth -10;
         healthBar.style.width = currentHealth + "%";
+        object.isDamaged = true;
+        
     }
 }
-
