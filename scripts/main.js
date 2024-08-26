@@ -2,7 +2,7 @@ let playerPlane;
 let cloud1;
 // const planeImage = new Image(); 
 // const cloudImage = new Image();
-let sources = { plane: "styles/Images/plane.png", cloud1: "styles/Images/cloud1.png", cloud2: "styles/Images/cloud2.png", f16: "styles/Images/f16.png", su27: "styles/Images/su27.png", explosion: "styles/Images/planeExplosion.png",};
+let sources = { plane: "styles/Images/plane.png", cloud1: "styles/Images/cloud1.png", cloud2: "styles/Images/cloud2.png", f16: "styles/Images/f16.png", su27: "styles/Images/su27.png", explosion: "styles/Images/planeExplosion.png" };
 let ctx;
 let secondsPassed = 0;
 let oldTimeStamp = 0;
@@ -115,6 +115,8 @@ function update(secondsPassed) {
         collision(playerPlane, su27);
     }
     );
+
+
 }
 
 
@@ -152,7 +154,7 @@ function startGame() {
             let h = 128;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
             let y = -100;
-            f16s.push(new entity(images.f16, w, h, x, y, "f16", true));
+            f16s.push(new Entity(images.f16, w, h, x, y, "f16", true));
         }, getRandomInt(13000) + 3000);
         
         
@@ -164,7 +166,7 @@ function startGame() {
             let h = 197;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
             let y = -100;
-            su27s.push(new entity(images.su27, w, h, x, y, "su27", true));
+            su27s.push(new Entity(images.su27, w, h, x, y, "su27", true));
         }, getRandomInt(17000) + 3000);
         
         
@@ -177,7 +179,7 @@ function startGame() {
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
             let y = -100;
 
-            clouds.push(new entity(images.cloud1, w, h, x, y, "cloud", false));
+            clouds.push(new Entity(images.cloud1, w, h, x, y, "cloud", false));
         }, 300);
 
         setInterval(() => {
@@ -186,7 +188,7 @@ function startGame() {
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
             let y = -100;
 
-            clouds.push(new entity(images.cloud2, w, h, x, y, "cloud", false));
+            clouds.push(new Entity(images.cloud2, w, h, x, y, "cloud", false));
         }, 300);
 
     })
@@ -353,7 +355,7 @@ function Player(image, width, height, pX, pY) {
 }
 
 
-class entity {
+class Entity {
     constructor(img, width, height, pX, pY, type, collidable) {
         this.image = img;
         this.width = width;
@@ -363,6 +365,7 @@ class entity {
         this.isDamaged = false;
         this.collidable = collidable;
         this.explosionFrame = 0;
+
     }
 
 
@@ -384,7 +387,17 @@ class entity {
     }
 }
 
+class Explosion{
+    constructor(image, width, height){
+        this.image = image;
+        this.width = width;
+        this.height = height
 
+    }
+    draw(Xpos, Ypos){
+        ctx.drawImage(this.image, 0, 0, this.width, this.height, Xpos, Ypos, this.width, this.height);
+    }
+}
 
 
 function getRandomInt(max) {
@@ -424,7 +437,7 @@ function collision(player, object) {
         playerPlane.recentlyDamaged = true;
         currentHealth = currentHealth -10;
         healthBar.style.width = currentHealth + "%";
-        object.isDamaged = true;
+        explosion = new Explosion(object.pX, object.pY);
         
     }
 }
