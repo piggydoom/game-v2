@@ -397,21 +397,14 @@ function Player(image, width, height, pX, pY)
         //     };
         // }
 
-        this.canTakeDamage = function ()
-        {
-            return Date.now() - this.lastDamageTime > this.invulnerabilityPeriod;
-        }
-
         this.takeDamage = function ()
         {
-            if (this.canTakeDamage())
-            {
-                this.isDamaged = true;
-                this.recentlyDamaged = true;
-                this.lastDamageTime = Date.now();
-                currentHealth = Math.max(0, currentHealth - 10); // Ensure health doesn't go below 0
-                healthBar.style.width = currentHealth + "%";
-            }
+
+            this.isDamaged = true;
+            this.recentlyDamaged = true;
+            this.lastDamageTime = Date.now();
+            currentHealth = Math.max(0, currentHealth - 10); // Ensure health doesn't go below 0
+            healthBar.style.width = currentHealth + "%";
         }
 
     }
@@ -468,7 +461,7 @@ class Entity
     update(speed)
     {
 
-            this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
+        this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
 
     }
 }
