@@ -81,6 +81,19 @@ li a:hover {
 
 }
 
+
+#endGameContainer {
+    display: none;
+    width: 100vw;
+    height: 90vh;
+    position:relative;
+    background-image: url("../Images/end.gif");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: 80%, center;
+}
+
 #startScreenText{
     text-align: center;
     margin: 0;

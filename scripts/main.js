@@ -17,6 +17,7 @@ let f16SpeedMultiplier = [2, 3, 6];
 let speedMultiplierIndex;
 const startScreen = document.getElementById("startScreenContainer");
 const gameCanvasDiv = document.getElementById("gameCanvas");
+const endGameContainer = document.getElementById("endGameContainer");
 let playerDamageTimer = 0;
 let healthBar = document.getElementById("health-bar");
 let currentHealth = 100;
@@ -27,7 +28,6 @@ let myGameArea = {
     canvas: document.createElement("canvas"),
     start: function ()
     {
-
         //sets the canvas width + height
         this.canvas.width = 100 * window.innerWidth / 100;
         this.canvas.height = 95 * window.innerHeight / 100;
@@ -217,6 +217,10 @@ function startGame()
     })
 }
 
+function endGame(){
+    gameCanvasDiv.style.display = "none";
+    endGameContainer.style.display = "block";
+};
 
 let mobileTouch = {
     yPos: 0, xPos: 0, isPressed: false,
@@ -404,6 +408,9 @@ function Player(image, width, height, pX, pY)
             this.recentlyDamaged = true;
             this.lastDamageTime = Date.now();
             currentHealth = Math.max(0, currentHealth - 10); // Ensure health doesn't go below 0
+            if(currentHealth == 0){
+                endGame();
+            }
             healthBar.style.width = currentHealth + "%";
         }
 
