@@ -323,7 +323,7 @@ function Player(image, width, height, pX, pY)
     {
         const distance = this.speed;
         this.pX = Math.max(0, Math.min(myGameArea.canvas.width - this.width, this.pX));
-        this.pY = Math.max(0, Math.min(myGameArea.canvas.height - this.height, this.pY));
+        // this.pY = Math.max(0, Math.min(myGameArea.canvas.height - this.height, this.pY));
 
 
 
@@ -346,7 +346,7 @@ function Player(image, width, height, pX, pY)
         if (keyPress.up)
         {
             speedMultiplierIndex = 2;
-            this.pY -= distance;
+            // this.pY -= distance;
             // if (this.pY <= 0) {
             //     this.pY = myGameArea.canvas.height - this.height;
 
@@ -356,7 +356,7 @@ function Player(image, width, height, pX, pY)
         if (keyPress.down)
         {
             speedMultiplierIndex = 0;
-            this.pY += distance;
+            // this.pY += distance;
             // if (this.pY >= myGameArea.canvas.height - this.height) {
             //     this.pY = 0;
             // }
@@ -365,7 +365,7 @@ function Player(image, width, height, pX, pY)
         if (mobileTouch.isPressed)
         {
             speedMultiplierIndex = 1;
-            this.pY = mobileTouch.yPos;
+            // this.pY = mobileTouch.yPos;
             this.pX = mobileTouch.xPos;
         }
 
