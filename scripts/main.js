@@ -219,7 +219,9 @@ function startGame()
 
 function endGame(){
     gameCanvasDiv.style.display = "none";
+    myGameArea.canvas.style.display = "none";
     endGameContainer.style.display = "block";
+
 };
 
 let mobileTouch = {
