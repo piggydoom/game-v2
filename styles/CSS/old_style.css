@@ -106,6 +106,13 @@ li a:hover {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+/* this.canvas.style.margin = 0;
+        this.canvas.style.padding = 0;
+        this.canvas.style.width = "100%";
+        this.canvas.style.display = "flex";
+        this.canvas.style.justifyContent = "center";
+        this.canvas.style.alignItems = "center";
+        this.canvas.style.overflow = "hidden"; */
 
 #health-container {
   position: absolute;
