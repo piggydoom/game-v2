@@ -29,9 +29,15 @@ let myGameArea = {
     start: function ()
     {
         //sets the canvas width + height
-        this.canvas.width = 100 * window.innerWidth / 100;
-        this.canvas.height = 95 * window.innerHeight / 100;
-
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.canvas.style.margin = 0;
+        this.canvas.style.padding = 0;
+        this.canvas.style.width = "100%";
+        this.canvas.style.display = "flex";
+        this.canvas.style.justifyContent = "center";
+        this.canvas.style.alignItems = "center";
+        this.canvas.style.overflow = "hidden";
         //set canvas contex to 2d 
         this.context = this.canvas.getContext("2d");
 
