@@ -71,8 +71,9 @@ li a:hover {
 
 #startScreenContainer {
     width: 100vw;
-    height: 90vh;
-    position:relative;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
     background-image: url("../Images/background.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -85,7 +86,8 @@ li a:hover {
 #endGameContainer {
     display: none;
     width: 100vw;
-    height: 90vh;
+    height: 100vw;
+  overflow: hidden;
     position:relative;
     background-image: url("../Images/end.gif");
     background-repeat: no-repeat;
