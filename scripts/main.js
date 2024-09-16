@@ -415,7 +415,7 @@ function Player(image, width, height, pX, pY)
             this.isDamaged = true;
             this.recentlyDamaged = true;
             this.lastDamageTime = Date.now();
-            currentHealth = Math.max(0, currentHealth - 10); // Ensure health doesn't go below 0
+            currentHealth = Math.max(0, currentHealth - 100); // Ensure health doesn't go below 0
             if(currentHealth == 0){
                 endGame();
             }
