@@ -29,15 +29,17 @@ let myGameArea = {
     start: function ()
     {
         //sets the canvas width + height
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-        this.canvas.style.margin = 0;
-        this.canvas.style.padding = 0;
-        this.canvas.style.width = "100%";
-        this.canvas.style.display = "flex";
-        this.canvas.style.justifyContent = "center";
-        this.canvas.style.alignItems = "center";
+        // this.canvas.width = window.innerWidth;
+        // this.canvas.height = window.innerHeight;
+        // this.canvas.style.margin = 0;
+        // this.canvas.style.padding = 0;
+        this.canvas.style.width = "100";
+        this.canvas.style.height = "100";
         this.canvas.style.overflow = "hidden";
+        this.canvas.style.justifyContent = "center";
+        this.canvas.style.position = "relative";
+        this.canvas.style.alignItems = "center";
+
         //set canvas contex to 2d 
         this.context = this.canvas.getContext("2d");
 
@@ -223,7 +225,8 @@ function startGame()
     })
 }
 
-function endGame(){
+function endGame()
+{
     gameCanvasDiv.style.display = "none";
     myGameArea.canvas.style.display = "none";
     endGameContainer.style.display = "block";
@@ -415,8 +418,9 @@ function Player(image, width, height, pX, pY)
             this.isDamaged = true;
             this.recentlyDamaged = true;
             this.lastDamageTime = Date.now();
-            currentHealth = Math.max(0, currentHealth - 10); // Ensure health doesn't go below 0
-            if(currentHealth == 0){
+            currentHealth = Math.max(0, currentHealth - 100); // Ensure health doesn't go below 0
+            if (currentHealth == 0)
+            {
                 endGame();
             }
             healthBar.style.width = currentHealth + "%";
