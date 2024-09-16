@@ -18,11 +18,13 @@ let speedMultiplierIndex;
 const startScreen = document.getElementById("startScreenContainer");
 const gameCanvasDiv = document.getElementById("gameCanvas");
 const endGameContainer = document.getElementById("endGameContainer");
-let playerDamageTimer = 0;
+const healthContainer = document.getElementById("health-container");
 let healthBar = document.getElementById("health-bar");
+let playerDamageTimer = 0;
 let currentHealth = 100;
 let lastCollisionTime = 0;
 const COLLISION_COOLDOWN = 1000;
+
 
 let myGameArea = {
     canvas: document.createElement("canvas"),
@@ -148,10 +150,12 @@ function startGame()
     startScreen.style.animation = "fade-out 3s forwards";
     gameCanvasDiv.style.display = "none";
     myGameArea.start();
+    //set timer for 3 seconds to disply canvas
     setInterval(() =>
     {
         startScreen.style.display = "none";
         gameCanvasDiv.style.display = "block";
+        healthContainer.style.display = "block";
     }, 3000);
 
     ctx = myGameArea.context;
