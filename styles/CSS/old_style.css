@@ -107,6 +107,13 @@ li a:hover {
   transform: translateY(-50%);
 }
 
+#score-container {
+  position: absolute;
+  top: 10px;
+  right:30px;
+}
+
+
 #health-container {
   position: absolute;
   top: 10px;
@@ -131,6 +138,17 @@ li a:hover {
   font-family: hyperionSunset;
   text-align: center;
 }
+
+#score-text{
+  font-family: hyperionSunset;
+  text-align: center;
+}
+#finalScoreContainer{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
 
 @keyframes fade-out {
   from {

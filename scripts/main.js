@@ -20,10 +20,14 @@ const gameCanvasDiv = document.getElementById("gameCanvas");
 const endGameContainer = document.getElementById("endGameContainer");
 const healthContainer = document.getElementById("health-container");
 let healthBar = document.getElementById("health-bar");
+let scoreText = document.getElementById("score-text");
+let score = 0;
 let playerDamageTimer = 0;
 let currentHealth = 100;
 let lastCollisionTime = 0;
 const COLLISION_COOLDOWN = 1000;
+let startScore = false;
+
 
 
 let myGameArea = {
@@ -78,6 +82,12 @@ function gameLoop(timeStamp)
 
     myGameArea.clear();
 
+    if(startScore){
+        score++;
+        scoreText.innerText = score;
+    
+    }
+   
 
     // console.log(f16SpeedMultiplier[speedMultiplierIndex]);
 
@@ -231,6 +241,7 @@ function startGame()
 
 function endGame()
 {
+    startScore = false;
     gameCanvasDiv.style.display = "none";
     myGameArea.canvas.style.display = "none";
     endGameContainer.style.display = "block";
@@ -273,7 +284,7 @@ function keyUp(event)
     let key = keyMap[event.keyCode];
     keyPress[key] = false;
     speedMultiplierIndex = 1;
-
+    startScore = true;
 }
 
 function touchHandler(event)
@@ -422,7 +433,7 @@ function Player(image, width, height, pX, pY)
             this.isDamaged = true;
             this.recentlyDamaged = true;
             this.lastDamageTime = Date.now();
-            currentHealth = Math.max(0, currentHealth - 10); // Ensure health doesn't go below 0
+            currentHealth = Math.max(0, currentHealth - 25); // Ensure health doesn't go below 0
             if (currentHealth == 0)
             {
                 endGame();
