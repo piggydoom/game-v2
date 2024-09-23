@@ -21,6 +21,7 @@ const endGameContainer = document.getElementById("endGameContainer");
 const healthContainer = document.getElementById("health-container");
 let healthBar = document.getElementById("health-bar");
 let scoreText = document.getElementById("score-text");
+let finalScoreText = document.getElementById("final-score-text");
 let score = 0;
 let playerDamageTimer = 0;
 let currentHealth = 100;
@@ -204,7 +205,6 @@ function startGame()
         //spawn su27
         setInterval(() =>
         {
-            console.log("test");
             let w = 128;
             let h = 197;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
@@ -241,10 +241,14 @@ function startGame()
 
 function endGame()
 {
+    console.log("game ended");
     startScore = false;
+    finalScoreText.innerHTML = score;
     gameCanvasDiv.style.display = "none";
     myGameArea.canvas.style.display = "none";
     endGameContainer.style.display = "block";
+    loopingCessnaAudio.autoplay = false;
+    loopingCessnaAudio.loop = false;
 
 };
 
@@ -273,6 +277,7 @@ let keyMap = {
 
 function keyDown(event)
 {
+    startScore = true;
     let key = keyMap[event.keyCode];
     keyPress[key] = true;
     loopingCessnaAudio.autoplay = true;
@@ -284,7 +289,7 @@ function keyUp(event)
     let key = keyMap[event.keyCode];
     keyPress[key] = false;
     speedMultiplierIndex = 1;
-    startScore = true;
+    
 }
 
 function touchHandler(event)
@@ -411,22 +416,6 @@ function Player(image, width, height, pX, pY)
             }
         };
 
-        // if (this.recentlyDamaged) {
-        //     playerDamageTimer++;
-        //     console.log(playerDamageTimer);
-        //     if (playerDamageTimer < 180) {
-
-        //         if (myGameArea.frameNo % 15 == 0) {
-        //             this.currentFrame = 5;
-        //         } else {
-        //             this.currentFrame = 1;
-
-        //         }
-        //         playerDamageTimer = 0;
-        //         this.recentlyDamaged = false;
-        //     };
-        // }
-
         this.takeDamage = function ()
         {
 
@@ -483,7 +472,7 @@ class Entity
             }
 
             ctx.drawImage(explosionImage, this.explosionFrame * 64, 0, 64, 64, this.pX - 128, this.pY, 384, 384);
-            console.log(this.explosionFrame);
+            // console.log(this.explosionFrame);
         }
         else
         {
