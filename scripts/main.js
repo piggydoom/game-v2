@@ -23,6 +23,7 @@ let healthBar = document.getElementById("health-bar");
 let scoreText = document.getElementById("score-text");
 let finalScoreText = document.getElementById("final-score-text");
 let score = 0;
+let finalScore;
 let playerDamageTimer = 0;
 let currentHealth = 100;
 let lastCollisionTime = 0;
@@ -83,12 +84,13 @@ function gameLoop(timeStamp)
 
     myGameArea.clear();
 
-    if(startScore){
+    if (startScore)
+    {
         score++;
         scoreText.innerText = score;
-    
+
     }
-   
+
 
     // console.log(f16SpeedMultiplier[speedMultiplierIndex]);
 
@@ -289,7 +291,7 @@ function keyUp(event)
     let key = keyMap[event.keyCode];
     keyPress[key] = false;
     speedMultiplierIndex = 1;
-    
+
 }
 
 function touchHandler(event)
