@@ -22,6 +22,7 @@ const healthContainer = document.getElementById("health-container");
 let healthBar = document.getElementById("health-bar");
 let scoreText = document.getElementById("score-text");
 let score = 0;
+let finalScore;
 let playerDamageTimer = 0;
 let currentHealth = 100;
 let lastCollisionTime = 0;
@@ -82,12 +83,13 @@ function gameLoop(timeStamp)
 
     myGameArea.clear();
 
-    if(startScore){
+    if (startScore)
+    {
         score++;
         scoreText.innerText = score;
-    
+
     }
-   
+
 
     // console.log(f16SpeedMultiplier[speedMultiplierIndex]);
 
@@ -242,6 +244,7 @@ function startGame()
 function endGame()
 {
     startScore = false;
+    finalScore = score;
     gameCanvasDiv.style.display = "none";
     myGameArea.canvas.style.display = "none";
     endGameContainer.style.display = "block";
