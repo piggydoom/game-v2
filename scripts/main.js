@@ -197,7 +197,7 @@ function startGame()
             let h = 128;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
             let y = -100;
-            f16s.push(new Entity(images.f16, w, h, x, y, "f16", true));
+            f16s.push(new Entity(images.f16, w, h, x, y, "plane", true, 0));
         }, getRandomInt(7000) + 3000);
 
 
@@ -209,7 +209,7 @@ function startGame()
             let h = 197;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
             let y = -100;
-            su27s.push(new Entity(images.su27, w, h, x, y, "su27", true));
+            su27s.push(new Entity(images.su27, w, h, x, y, "plane", true, 0));
         }, getRandomInt(4000) + 3000);
 
 
@@ -223,7 +223,7 @@ function startGame()
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
             let y = -100;
 
-            clouds.push(new Entity(images.cloud1, w, h, x, y, "cloud", false));
+            clouds.push(new Entity(images.cloud1, w, h, x, y, "cloud", false, 0));
         }, 300);
 
         setInterval(() =>
@@ -233,7 +233,7 @@ function startGame()
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
             let y = -100;
 
-            clouds.push(new Entity(images.cloud2, w, h, x, y, "cloud", false));
+            clouds.push(new Entity(images.cloud2, w, h, x, y, "cloud", false, 0));
         }, 300);
 
     })
@@ -436,7 +436,7 @@ function Player(image, width, height, pX, pY)
 
 class Entity
 {
-    constructor(img, width, height, pX, pY, type, collidable)
+    constructor(img, width, height, pX, pY, type, collidable, rotation)
     {
         this.image = img;
         this.width = width;
@@ -447,7 +447,8 @@ class Entity
         this.collidable = collidable;
         this.explosionFrame = 0;
         this.explosionFrameCounter = 0;
-
+        this.type = type;
+        this.rotation = rotation;
     }
 
 
@@ -474,11 +475,18 @@ class Entity
             ctx.drawImage(explosionImage, this.explosionFrame * 64, 0, 64, 64, this.pX - 128, this.pY, 384, 384);
             // console.log(this.explosionFrame);
         }
-        else
+        else if (this.type == "plane" || this.type == "cloud")
         {
+            ctx.save();
+            ctx.translate();
+            ctx.rotate((90 * Math.PI) / 180);
             // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
             ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
+            ctx.restore();
         }
+        else if (this.type == "blimp") {
+
+        } 
     }
 
     update(speed)
