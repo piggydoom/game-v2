@@ -145,10 +145,19 @@ li a:hover {
 }
 #finalScoreContainer{
   position: absolute;
-  top: 50%;
-  left: 50%;
+top: 50%;
+left: 25%;
+right: 25%;
+width: 50%;
 }
 
+#finalScore{
+  font-family: hyperionSunset;
+}
+
+#final-score-text{
+  font-family: hyperionSunset;
+}
 
 @keyframes fade-out {
   from {
