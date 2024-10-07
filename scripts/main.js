@@ -256,8 +256,8 @@ function startGame()
             let w = 73;
             let h = 126;
             let x = -100;
-            let y = Math.random() * Math.abs(myGameArea.canvas.height - h);
-
+            let y = Math.random() * Math.abs(myGameArea.canvas.width - w);
+            //problem here
             blimps.push(new Entity(images.blimp, w, h, x, y, "blimp", 45));
         }, 5000);
 
