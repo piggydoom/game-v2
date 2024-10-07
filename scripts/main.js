@@ -35,7 +35,8 @@ let startScore = false;
 
 let myGameArea = {
     canvas: document.createElement("canvas"),
-    start: function () {
+    start: function ()
+    {
         //sets the canvas width + height
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
@@ -63,14 +64,16 @@ let myGameArea = {
     },
 
     //clearing the screen
-    clear: function () {
+    clear: function ()
+    {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.context.fillStyle = "#2bceff";
         this.context.fillRect(0, 0, myGameArea.canvas.width, myGameArea.canvas.height);
     },
 }
 
-function gameLoop(timeStamp) {
+function gameLoop(timeStamp)
+{
     //calculate how much time has passed
     secondsPassed = (timeStamp - oldTimeStamp) / 1000;
     oldTimeStamp = timeStamp;
@@ -82,7 +85,8 @@ function gameLoop(timeStamp) {
 
     myGameArea.clear();
 
-    if (startScore) {
+    if (startScore)
+    {
         score++;
         scoreText.innerText = score;
 
@@ -102,51 +106,60 @@ function gameLoop(timeStamp) {
     window.requestAnimationFrame(gameLoop);
 
     playerPlane.draw();
-    clouds.forEach((cloud) => {
+    clouds.forEach((cloud) =>
+    {
         cloud.draw();
 
 
     });
 
-    f16s.forEach((f16) => {
+    f16s.forEach((f16) =>
+    {
         f16.draw();
     });
 
-    su27s.forEach((su27) => {
+    su27s.forEach((su27) =>
+    {
         su27.draw();
     });
 
-    blimps.forEach((blimp) => {
+    blimps.forEach((blimp) =>
+    {
         blimp.drawRotated(45);
     });
 
 }
 //game logic loop
-function update(secondsPassed) {
+function update(secondsPassed)
+{
 
     timePassed += secondsPassed;
     playerPlane.update(timePassed);
 
 
-    clouds.forEach((cloud) => {
+    clouds.forEach((cloud) =>
+    {
         cloud.update(2);
     });
 
 
     //itterate over each f16 and apply collision
-    f16s.forEach((f16) => {
+    f16s.forEach((f16) =>
+    {
         f16.update(5);
         collision(playerPlane, f16);
     }
     );
 
-    su27s.forEach((su27) => {
+    su27s.forEach((su27) =>
+    {
         su27.update(7);
         collision(playerPlane, su27);
     }
     );
 
-    blimps.forEach((blimp) => {
+    blimps.forEach((blimp) =>
+    {
         blimp.update(5);
         collision(playerPlane, blimp);
 
@@ -157,12 +170,14 @@ function update(secondsPassed) {
 
 
 //waits for page body to load then runs startGame
-function startGame() {
+function startGame()
+{
     startScreen.style.animation = "fade-out 3s forwards";
     gameCanvasDiv.style.display = "none";
     myGameArea.start();
     //set timer for 3 seconds to disply canvas
-    setInterval(() => {
+    setInterval(() =>
+    {
         startScreen.style.display = "none";
         gameCanvasDiv.style.display = "block";
         healthContainer.style.display = "block";
@@ -172,7 +187,8 @@ function startGame() {
 
     loopingCessnaAudio.volume = 0.25;
 
-    loadImages(sources, function (images) {
+    loadImages(sources, function (images)
+    {
 
         explosionImage = images.explosion;
 
@@ -188,7 +204,8 @@ function startGame() {
 
 
         //spawn f16s
-        setInterval(() => {
+        setInterval(() =>
+        {
 
             let w = 76;
             let h = 128;
@@ -200,7 +217,8 @@ function startGame() {
 
 
         //spawn su27
-        setInterval(() => {
+        setInterval(() =>
+        {
             let w = 128;
             let h = 197;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
@@ -212,7 +230,8 @@ function startGame() {
 
 
         //spawn clouds
-        setInterval(() => {
+        setInterval(() =>
+        {
             let w = 128;
             let h = 128;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
@@ -221,7 +240,8 @@ function startGame() {
             clouds.push(new Entity(images.cloud1, w, h, x, y, "cloud", false, 0));
         }, 300);
 
-        setInterval(() => {
+        setInterval(() =>
+        {
             let w = 128;
             let h = 128;
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
@@ -231,7 +251,8 @@ function startGame() {
         }, 300);
 
         //spawan blimps
-        setInterval(() => {
+        setInterval(() =>
+        {
             let w = 73;
             let h = 126;
             let x = -100;
@@ -243,7 +264,8 @@ function startGame() {
     })
 }
 
-function endGame() {
+function endGame()
+{
     console.log("game ended");
     startScore = false;
     finalScoreText.innerHTML = score;
@@ -278,7 +300,8 @@ let keyMap = {
 }
 
 
-function keyDown(event) {
+function keyDown(event)
+{
     startScore = true;
     let key = keyMap[event.keyCode];
     keyPress[key] = true;
@@ -286,15 +309,18 @@ function keyDown(event) {
     loopingCessnaAudio.loop = true;
 };
 
-function keyUp(event) {
+function keyUp(event)
+{
     let key = keyMap[event.keyCode];
     keyPress[key] = false;
     speedMultiplierIndex = 1;
 
 }
 
-function touchHandler(event) {
-    if (event.touches) {
+function touchHandler(event)
+{
+    if (event.touches)
+    {
         mobileTouch.xPos = event.touches[0].pageX - myGameArea.canvas.offsetLeft - 128 / 2;
         mobileTouch.yPos = event.touches[0].pageY - myGameArea.canvas.offsetTop - 128 / 2;
         mobileTouch.isPressed = true;
@@ -307,7 +333,8 @@ window.addEventListener("touchstart", touchHandler);
 window.addEventListener("touchmove", touchHandler);
 
 
-function Player(image, width, height, pX, pY) {
+function Player(image, width, height, pX, pY)
+{
 
     this.image = image;
     this.width = width;
@@ -322,51 +349,62 @@ function Player(image, width, height, pX, pY) {
     this.lastDamageTime = 0;
     this.invulnerabilityPeriod = 1000;
 
-    this.draw = function () {
+    this.draw = function ()
+    {
 
-        if (this.recentlyDamaged) {
+        if (this.recentlyDamaged)
+        {
             playerDamageTimer++;
-            if (playerDamageTimer < 360) {
-                if (myGameArea.frameNo % 10) {
+            if (playerDamageTimer < 360)
+            {
+                if (myGameArea.frameNo % 10)
+                {
                     ctx.drawImage(this.image, this.damageFrames[this.currentFrame] * 128, 0, 128, 128, this.pX, this.pY, this.width, this.height);
                 }
-            } else {
+            } else
+            {
                 this.recentlyDamaged = false;
                 playerDamageTimer = 0;
             }
         }
-        else if (this.isDamaged) {
+        else if (this.isDamaged)
+        {
             // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
             ctx.drawImage(this.image, this.damageFrames[this.currentFrame] * 128, 0, 128, 128, this.pX, this.pY, this.width, this.height);
-        } else {
+        } else
+        {
 
             // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
             ctx.drawImage(this.image, 0, 0, 128, 128, this.pX, this.pY, this.width, this.height);
         }
     }
 
-    this.update = function () {
+    this.update = function ()
+    {
         const distance = this.speed;
         this.pX = Math.max(0, Math.min(myGameArea.canvas.width - this.width, this.pX));
         // this.pY = Math.max(0, Math.min(myGameArea.canvas.height - this.height, this.pY));
 
 
 
-        if (keyPress.left) {
+        if (keyPress.left)
+        {
             this.pX -= distance;
             // if (this.pX <= 0) {
             //     this.pX = myGameArea.canvas.width - this.width;
             // }
         }
 
-        if (keyPress.right) {
+        if (keyPress.right)
+        {
             this.pX += distance;
             // if (this.pX >= myGameArea.canvas.width - this.width) {
             //     this.pX = 0;
             // }
         }
 
-        if (keyPress.up) {
+        if (keyPress.up)
+        {
             speedMultiplierIndex = 2;
             // this.pY -= distance;
             // if (this.pY <= 0) {
@@ -375,7 +413,8 @@ function Player(image, width, height, pX, pY) {
             // }
         }
 
-        if (keyPress.down) {
+        if (keyPress.down)
+        {
             speedMultiplierIndex = 0;
             // this.pY += distance;
             // if (this.pY >= myGameArea.canvas.height - this.height) {
@@ -383,28 +422,34 @@ function Player(image, width, height, pX, pY) {
             // }
         }
 
-        if (mobileTouch.isPressed) {
+        if (mobileTouch.isPressed)
+        {
             speedMultiplierIndex = 1;
             // this.pY = mobileTouch.yPos;
             this.pX = mobileTouch.xPos;
         }
 
-        if (this.isDamaged) {
-            if (myGameArea.frameNo % 10 == 0) {
+        if (this.isDamaged)
+        {
+            if (myGameArea.frameNo % 10 == 0)
+            {
                 this.currentFrame++;
             }
-            if (this.currentFrame >= this.damageFrames.length) {
+            if (this.currentFrame >= this.damageFrames.length)
+            {
                 this.currentFrame = 1;
             }
         };
 
-        this.takeDamage = function () {
+        this.takeDamage = function ()
+        {
 
             this.isDamaged = true;
             this.recentlyDamaged = true;
             this.lastDamageTime = Date.now();
             currentHealth = Math.max(0, currentHealth - 25); // Ensure health doesn't go below 0
-            if (currentHealth == 0) {
+            if (currentHealth == 0)
+            {
                 endGame();
             }
             healthBar.style.width = currentHealth + "%";
@@ -414,8 +459,10 @@ function Player(image, width, height, pX, pY) {
 }
 
 
-class Entity {
-    constructor(img, width, height, pX, pY, type, collidable, rotation) {
+class Entity
+{
+    constructor(img, width, height, pX, pY, type, collidable, rotation)
+    {
         this.image = img;
         this.width = width;
         this.height = height;
@@ -432,34 +479,38 @@ class Entity {
 
 
 
-    draw() {
+    draw()
+    {
 
-        if (this.isDamaged) {
-            if (this.explosionFrame > 32) {
+        if (this.isDamaged)
+        {
+            if (this.explosionFrame > 32)
+            {
                 this.isDamaged = false;
                 delete this.pY;
             }
 
             this.explosionFrameCounter++;
 
-            if (this.explosionFrameCounter % 400) {
+            if (this.explosionFrameCounter % 400)
+            {
                 this.explosionFrame++;
             }
 
             ctx.drawImage(explosionImage, this.explosionFrame * 64, 0, 64, 64, this.pX - 128, this.pY, 384, 384);
             // console.log(this.explosionFrame);
-
-            if (this.damage == false) {
-                // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-                ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
-
-            }
+        }
+        else (!this.isDamaged)
+        {
+            // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+            ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
 
         }
 
     }
 
-    drawRotated(degrees) {
+    drawRotated(degrees)
+    {
         ctx.save();
         ctx.translate(myGameArea.canvas.width / 2, myGameArea.canvas.height / 2);
         ctx.rotate(degrees * Math.PI / 180);
@@ -467,7 +518,8 @@ class Entity {
         ctx.restore();
     }
 
-    update(speed) {
+    update(speed)
+    {
 
         this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
 
@@ -475,23 +527,29 @@ class Entity {
 }
 
 
-function getRandomInt(max) {
+function getRandomInt(max)
+{
     return Math.floor(Math.random() * max);
 }
 
 
-function loadImages(sources, callback) {
+function loadImages(sources, callback)
+{
     var images = {};
     var loadedImages = 0;
     var numImages = 0;
     // get num of sources
-    for (var src in sources) {
+    for (var src in sources)
+    {
         numImages++;
     }
-    for (var src in sources) {
+    for (var src in sources)
+    {
         images[src] = new Image();
-        images[src].onload = function () {
-            if (++loadedImages >= numImages) {
+        images[src].onload = function ()
+        {
+            if (++loadedImages >= numImages)
+            {
                 callback(images);
             }
         };
@@ -500,7 +558,8 @@ function loadImages(sources, callback) {
 }
 
 
-function collision(player, object) {
+function collision(player, object)
+{
 
 
     if (
@@ -508,9 +567,11 @@ function collision(player, object) {
         object.pX + object.width >= player.pX && //check if object right hand side touches player left hand side
         player.pY + player.height >= object.pY && //check if player bottom side touches object top side
         object.pY + object.height >= player.pY //check if player top side touches object bottom side
-    ) {
+    )
+    {
         const currentTime = Date.now();
-        if (currentTime - lastCollisionTime > COLLISION_COOLDOWN) {
+        if (currentTime - lastCollisionTime > COLLISION_COOLDOWN)
+        {
             player.takeDamage();
             object.isDamaged = true;
             lastCollisionTime = currentTime;
