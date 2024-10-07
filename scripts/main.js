@@ -2,7 +2,7 @@ let playerPlane;
 let cloud1;
 // const planeImage = new Image(); 
 // const cloudImage = new Image();
-let sources = { plane: "styles/Images/plane.png", cloud1: "styles/Images/cloud1.png", cloud2: "styles/Images/cloud2.png", f16: "styles/Images/f16.png", su27: "styles/Images/su27.png", explosion: "styles/Images/planeExplosion.png" };
+let sources = { plane: "styles/Images/plane.png", cloud1: "styles/Images/cloud1.png", cloud2: "styles/Images/cloud2.png", f16: "styles/Images/f16.png", su27: "styles/Images/su27.png", explosion: "styles/Images/planeExplosion.png", blimp: "styles/Images/blimp.png"  };
 let ctx;
 let secondsPassed = 0;
 let oldTimeStamp = 0;
@@ -11,6 +11,7 @@ let timePassed = 0;
 let clouds = [];
 let f16s = [];
 let su27s = [];
+let blimps =[];
 let explosionImage;
 const loopingCessnaAudio = new Audio("../styles/audio/cessna-looping.wav");
 let f16SpeedMultiplier = [2, 3, 6];
@@ -121,6 +122,8 @@ function gameLoop(timeStamp)
     {
         su27.draw();
     });
+
+    blimps.forEach
 
 }
 //game logic loop
@@ -476,19 +479,23 @@ class Entity
 
             ctx.drawImage(explosionImage, this.explosionFrame * 64, 0, 64, 64, this.pX - 128, this.pY, 384, 384);
             // console.log(this.explosionFrame);
-        }
-        else if (this.type == "plane" || this.type == "cloud")
-        {
-            ctx.save();
-            ctx.translate();
-            ctx.rotate((90 * Math.PI) / 180);
-            // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-            ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
-            ctx.restore();
-        }
-        else if (this.type == "blimp") {
 
-        } 
+        if(this.damage == false){
+              // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+              ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
+            
+        }
+          
+        }
+       
+    }
+
+    drawRotated(degrees){
+        ctx.save();
+        ctx.translate(myGameArea.canvas.width / 2, myGameArea.canvas.height / 2);
+        ctx.rotate(degrees * Math.PI / 180);
+        ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pY, this.pX, this.width, this.height);
+        ctx.restore();
     }
 
     update(speed)
