@@ -126,6 +126,10 @@ function gameLoop(timeStamp)
     blimps.forEach((blimp) =>
     {
         blimp.drawRotated(135);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(myGameArea.canvas.width, myGameArea.canvas.height);
+            ctx.stroke();
     });
 
 }
@@ -255,10 +259,11 @@ function startGame()
         {
             let w = 73;
             let h = 126;
-            let y = 0;
-            let x = 0;
+            let y = getRandomInt(myGameArea.canvas.height);
+            let x = getRandomInt(myGameArea.canvas.width);
             //problem here
-            blimps.push(new Entity(images.blimp, w, h, y, x, "blimp", false, 45));
+            blimps.push(new Entity(images.blimp, w, h, x, y, "blimp", false, 45));
+            
         }, 1000);
 
     })
@@ -523,7 +528,11 @@ class Entity
     {
 
         this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
+        if(this.type == "blimp"){
+            this.pY += speed * Math.sin(0.785);
+            this.pX -= speed * Math.sin(0.785);
 
+        } 
     }
 }
 
