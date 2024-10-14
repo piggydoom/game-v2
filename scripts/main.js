@@ -125,7 +125,7 @@ function gameLoop(timeStamp)
 
     blimps.forEach((blimp) =>
     {
-        blimp.drawRotated(45);
+        blimp.drawRotated(135);
     });
 
 }
@@ -255,11 +255,11 @@ function startGame()
         {
             let w = 73;
             let h = 126;
-            let x = -100;
-            let y = Math.random() * Math.abs(myGameArea.canvas.width - w);
+            let y = 0;
+            let x = 0;
             //problem here
-            blimps.push(new Entity(images.blimp, w, h, x, y, "blimp", 45));
-        }, 5000);
+            blimps.push(new Entity(images.blimp, w, h, y, x, "blimp", false, 45));
+        }, 1000);
 
     })
 }
@@ -512,10 +512,11 @@ class Entity
     drawRotated(degrees)
     {
         ctx.save();
-        ctx.translate(myGameArea.canvas.width / 2, myGameArea.canvas.height / 2);
+        ctx.translate(myGameArea.canvas.width, myGameArea.canvas.height);
         ctx.rotate(degrees * Math.PI / 180);
-        ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pY, this.pX, this.width, this.height);
+        ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
         ctx.restore();
+
     }
 
     update(speed)
