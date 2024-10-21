@@ -126,10 +126,10 @@ function gameLoop(timeStamp)
     blimps.forEach((blimp) =>
     {
         blimp.drawRotated(135);
-            ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.lineTo(myGameArea.canvas.width, myGameArea.canvas.height);
-            ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(myGameArea.canvas.width, myGameArea.canvas.height);
+        ctx.stroke();
     });
 
 }
@@ -263,8 +263,8 @@ function startGame()
             let x = getRandomInt(myGameArea.canvas.width);
             //problem here
             blimps.push(new Entity(images.blimp, w, h, x, y, "blimp", false, 45));
-            
-        }, 1000);
+
+        }, 500);
 
     })
 }
@@ -514,13 +514,24 @@ class Entity
 
     }
 
+
     drawRotated(degrees)
     {
-        ctx.save();
-        ctx.translate(myGameArea.canvas.width, myGameArea.canvas.height);
-        ctx.rotate(degrees * Math.PI / 180);
-        ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
-        ctx.restore();
+        if (this.type = "blimp")
+        {
+            this.pX = Math.sin(1) * getRandomInt(100);
+            this.pY = Math.sin(1) * getRandomInt(100);
+
+            console.log("What is " + Math.cos(1.5));
+            console.log("What is " + Math.sin(1.5));
+            // this.pY +=  Math.sin(1.5708);
+            // this.pX -= speed * Math.cos(1.5708);
+            ctx.save();
+            // ctx.translate(myGameArea.canvas.width, myGameArea.canvas.height);
+            ctx.rotate(degrees * Math.PI / 180);
+            ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
+            ctx.restore();
+        }
 
     }
 
@@ -528,11 +539,12 @@ class Entity
     {
 
         this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
-        if(this.type == "blimp"){
-            this.pY += speed * Math.sin(0.785);
-            this.pX -= speed * Math.sin(0.785);
+        if (this.type == "blimp")
+        {
+            this.pY += speed * Math.sin(1.5708);
+            this.pX -= speed * Math.sin(1.5708);
 
-        } 
+        }
     }
 }
 
