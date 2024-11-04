@@ -31,7 +31,7 @@ let lastCollisionTime = 0;
 const COLLISION_COOLDOWN = 1000;
 let startScore = false;
 
-
+// test
 
 let myGameArea = {
     canvas: document.createElement("canvas"),
