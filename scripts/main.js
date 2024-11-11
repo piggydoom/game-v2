@@ -169,7 +169,7 @@ function update(secondsPassed)
 
     blimps.forEach((blimp) =>
     {
-        blimp.updateRotated(5, 135);
+        blimp.updateRotated(5, 90);
         collision(playerPlane, blimp);
 
     }
@@ -177,7 +177,7 @@ function update(secondsPassed)
 
     blimps2.forEach((blimp) =>
         {
-            blimp.updateRotated(5, 225);
+            blimp.updateRotated(5, 0);
             collision(playerPlane, blimp);
     
         }
@@ -567,11 +567,11 @@ class Entity
     updateRotated(speed, degrees){
         ctx.save();
         ctx.translate(myGameArea.canvas.width / 2, myGameArea.canvas.height / 2);
+        ctx.rotate(degrees * Math.PI / 180);
         ctx.beginPath();
         ctx.moveTo(0, 0);
-        ctx.lineTo(myGameArea.canvas.width, myGameArea.canvas.height);
+        ctx.lineTo(myGameArea.canvas.width -200, myGameArea.canvas.height -200);
         ctx.stroke();
-        ctx.rotate(degrees * Math.PI / 180);
         this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
         ctx.translate(-myGameArea.canvas.width / 2, -myGameArea.canvas.height / 2);
         ctx.restore();
