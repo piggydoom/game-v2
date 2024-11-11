@@ -12,6 +12,7 @@ let clouds = [];
 let f16s = [];
 let su27s = [];
 let blimps = [];
+let blimps2 = [];
 let explosionImage;
 const loopingCessnaAudio = new Audio("../styles/audio/cessna-looping.wav");
 let f16SpeedMultiplier = [2, 3, 6];
@@ -126,11 +127,15 @@ function gameLoop(timeStamp)
     blimps.forEach((blimp) =>
     {
         blimp.drawRotated(135);
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(myGameArea.canvas.width, myGameArea.canvas.height);
-        ctx.stroke();
+  
     });
+
+    blimps2.forEach((blimp) =>
+    {
+        blimp.drawRotated(225);
+
+    });
+
 
 }
 //game logic loop
@@ -169,6 +174,15 @@ function update(secondsPassed)
 
     }
     );
+
+    blimps2.forEach((blimp) =>
+        {
+            blimp.update(5);
+            collision(playerPlane, blimp);
+    
+        }
+        );
+
 }
 
 
@@ -259,12 +273,24 @@ function startGame()
         {
             let w = 73;
             let h = 126;
-            let y = getRandomInt(myGameArea.canvas.height);
-            let x = getRandomInt(myGameArea.canvas.width);
+            let y = -500;
+            let x = getRandomInt(900) - 200;
             //problem here
             blimps.push(new Entity(images.blimp, w, h, x, y, "blimp", false, 45));
 
-        }, 500);
+        }, 1000);
+
+         //spawan blimps2
+         setInterval(() =>
+            {
+                let w = 73;
+                let h = 126;
+                let y = -500;
+                let x = -getRandomInt(900) + 200;
+                //problem here
+                blimps2.push(new Entity(images.blimp, w, h, x, y, "blimp", false, 45));
+    
+            }, 1000);
 
     })
 }
@@ -519,17 +545,11 @@ class Entity
     {
         if (this.type = "blimp")
         {
-            this.pX = Math.sin(1) * getRandomInt(100);
-            this.pY = Math.sin(1) * getRandomInt(100);
-
-            console.log("What is " + Math.cos(1.5));
-            console.log("What is " + Math.sin(1.5));
-            // this.pY +=  Math.sin(1.5708);
-            // this.pX -= speed * Math.cos(1.5708);
             ctx.save();
-            // ctx.translate(myGameArea.canvas.width, myGameArea.canvas.height);
+            ctx.translate(myGameArea.canvas.width / 2, myGameArea.canvas.height / 2);
             ctx.rotate(degrees * Math.PI / 180);
             ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
+            ctx.translate(-myGameArea.canvas.width / 2, -myGameArea.canvas.height / 2);
             ctx.restore();
         }
 
@@ -541,8 +561,8 @@ class Entity
         this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
         if (this.type == "blimp")
         {
-            this.pY += speed * Math.sin(1.5708);
-            this.pX -= speed * Math.sin(1.5708);
+            this.pY += speed;// * Math.sin(1.5708);
+            this.pX -= speed;// * Math.sin(1.5708);
 
         }
     }
