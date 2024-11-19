@@ -114,27 +114,27 @@ function gameLoop(timeStamp)
 
     });
 
-    f16s.forEach((f16) =>
-    {
-        f16.draw();
-    });
+    // f16s.forEach((f16) =>
+    // {
+    //     f16.draw();
+    // });
 
-    su27s.forEach((su27) =>
-    {
-        su27.draw();
-    });
+    // su27s.forEach((su27) =>
+    // {
+    //     su27.draw();
+    // });
 
     blimps.forEach((blimp) =>
     {
-        blimp.drawRotated(135);
+        blimp.drawRotated(0);
   
     });
 
-    blimps2.forEach((blimp) =>
-    {
-        blimp.drawRotated(225);
+    // blimps2.forEach((blimp) =>
+    // {
+    //     blimp.drawRotated(225);
 
-    });
+    // });
 
 
 }
@@ -153,35 +153,35 @@ function update(secondsPassed)
 
 
     //itterate over each f16 and apply collision
-    f16s.forEach((f16) =>
-    {
-        f16.update(5);
-        collision(playerPlane, f16);
-    }
-    );
+    // f16s.forEach((f16) =>
+    // {
+    //     f16.update(5);
+    //     collision(playerPlane, f16);
+    // }
+    // );
 
-    su27s.forEach((su27) =>
-    {
-        su27.update(7);
-        collision(playerPlane, su27);
-    }
-    );
+    // su27s.forEach((su27) =>
+    // {
+    //     su27.update(7);
+    //     collision(playerPlane, su27);
+    // }
+    // );
 
     blimps.forEach((blimp) =>
     {
-        blimp.updateRotated(5, 90);
+        blimp.updateRotated(5, 0);
         collision(playerPlane, blimp);
 
     }
     );
 
-    blimps2.forEach((blimp) =>
-        {
-            blimp.updateRotated(5, 0);
-            collision(playerPlane, blimp);
+    // blimps2.forEach((blimp) =>
+    //     {
+    //         blimp.updateRotated(5, 0);
+    //         collision(playerPlane, blimp);
     
-        }
-        );
+    //     }
+    //     );
 
 }
 
@@ -255,7 +255,7 @@ function startGame()
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
             let y = -100;
 
-            clouds.push(new Entity(images.cloud1, w, h, x, y, "cloud", false, 0));
+            clouds.push(new Entity(images.cloud1, w, h, x, y, "cloud", false));
         }, 300);
 
         setInterval(() =>
@@ -265,7 +265,7 @@ function startGame()
             let x = Math.random() * Math.abs(myGameArea.canvas.width - w);
             let y = -100;
 
-            clouds.push(new Entity(images.cloud2, w, h, x, y, "cloud", false, 0));
+            clouds.push(new Entity(images.cloud2, w, h, x, y, "cloud", false));
         }, 300);
 
         //spawan blimps
@@ -276,21 +276,21 @@ function startGame()
             let y = -500;
             let x = getRandomInt(900) - 200;
             //problem here
-            blimps.push(new Entity(images.blimp, w, h, x, y, "blimp", false, 45));
+            blimps.push(new Entity(images.blimp, w, h, x, y, "blimp", false));
 
         }, 1000);
 
          //spawan blimps2
-         setInterval(() =>
-            {
-                let w = 73;
-                let h = 126;
-                let y = -500;
-                let x = -getRandomInt(900) + 200;
-                //problem here
-                blimps2.push(new Entity(images.blimp, w, h, x, y, "blimp", false, 45));
+        //  setInterval(() =>
+        //     {
+        //         let w = 73;
+        //         let h = 126;
+        //         let y = -500;
+        //         let x = -getRandomInt(900) + 200;
+        //         //problem here
+        //         blimps2.push(new Entity(images.blimp, w, h, x, y, "blimp", false));
     
-            }, 1000);
+        //     }, 1000);
 
     })
 }
@@ -492,7 +492,7 @@ function Player(image, width, height, pX, pY)
 
 class Entity
 {
-    constructor(img, width, height, pX, pY, type, collidable, rotation)
+    constructor(img, width, height, pX, pY, type, collidable)
     {
         this.image = img;
         this.width = width;
@@ -504,7 +504,6 @@ class Entity
         this.explosionFrame = 0;
         this.explosionFrameCounter = 0;
         this.type = type;
-        this.rotation = rotation;
     }
 
 
@@ -548,8 +547,12 @@ class Entity
             ctx.save();
             ctx.translate(myGameArea.canvas.width / 2, myGameArea.canvas.height / 2);
             ctx.rotate(degrees * Math.PI / 180);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(myGameArea.canvas.width, myGameArea.canvas.height );
+            ctx.strokeStyle = "red";
+            ctx.stroke();
             ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
-            ctx.translate(-myGameArea.canvas.width / 2, -myGameArea.canvas.height / 2);
             ctx.restore();
 
         
@@ -567,15 +570,27 @@ class Entity
     updateRotated(speed, degrees){
         ctx.save();
         ctx.translate(myGameArea.canvas.width / 2, myGameArea.canvas.height / 2);
-        ctx.rotate(degrees * Math.PI / 180);
+        // ctx.rotate(degrees * Math.PI / 180);
         ctx.beginPath();
         ctx.moveTo(0, 0);
-        ctx.lineTo(myGameArea.canvas.width -200, myGameArea.canvas.height -200);
+        ctx.lineTo(myGameArea.canvas.width, myGameArea.canvas.height);
         ctx.stroke();
         this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
-        ctx.translate(-myGameArea.canvas.width / 2, -myGameArea.canvas.height / 2);
+     
+      
         ctx.restore();
     }
+    // ctx.save();
+    // ctx.translate(myGameArea.canvas.width / 2, myGameArea.canvas.height / 2);
+    // ctx.rotate(degrees * Math.PI / 180);
+    // ctx.beginPath();
+    // ctx.moveTo(0, 0);
+    // ctx.lineTo(myGameArea.canvas.width, myGameArea.canvas.height );
+    // ctx.strokeStyle = "red";
+    // ctx.stroke();
+    // ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
+    // ctx.restore();
+
 
 }
 
