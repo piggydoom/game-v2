@@ -126,7 +126,7 @@ function gameLoop(timeStamp)
 
     blimps.forEach((blimp) =>
     {
-        blimp.drawRotated(0);
+        blimp.drawRotated(45);
   
     });
 
@@ -146,10 +146,7 @@ function update(secondsPassed)
     playerPlane.update(timePassed);
 
 
-    clouds.forEach((cloud) =>
-    {
-        cloud.update(2);
-    });
+   
 
 
     //itterate over each f16 and apply collision
@@ -167,13 +164,13 @@ function update(secondsPassed)
     // }
     // );
 
-    blimps.forEach((blimp) =>
-    {
-        blimp.updateRotated(5, 0);
-        collision(playerPlane, blimp);
+    // blimps.forEach((blimp) =>
+    // {
+    //     blimp.updateRotated(5, 0);
+    //     collision(playerPlane, blimp);
 
-    }
-    );
+    // }
+    // );
 
     // blimps2.forEach((blimp) =>
     //     {
@@ -545,7 +542,10 @@ class Entity
   
         
             ctx.save();
+            // ctx.translate(myGameArea.canvas.width / 2, myGameArea.canvas.height / 2);
             ctx.translate(myGameArea.canvas.width / 2, myGameArea.canvas.height / 2);
+            ctx.rotate(degrees * Math.PI / 180);
+            ctx.translate(-myGameArea.canvas.width / 2, -myGameArea.canvas.height / 2);
             ctx.rotate(degrees * Math.PI / 180);
             ctx.beginPath();
             ctx.moveTo(0, 0);
@@ -568,29 +568,19 @@ class Entity
 
     
     updateRotated(speed, degrees){
-        ctx.save();
-        ctx.translate(myGameArea.canvas.width / 2, myGameArea.canvas.height / 2);
+        // ctx.save();
+        // ctx.translate(myGameArea.canvas.width / 2, myGameArea.canvas.height / 2);
         // ctx.rotate(degrees * Math.PI / 180);
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(myGameArea.canvas.width, myGameArea.canvas.height);
-        ctx.stroke();
-        this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
+        // ctx.translate(-myGameArea.canvas.width / 2, -myGameArea.canvas.height / 2);
+        // ctx.beginPath();
+        // ctx.moveTo(0, 0);
+        // ctx.lineTo(myGameArea.canvas.width, myGameArea.canvas.height);
+        // ctx.stroke();
+        // this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
      
       
-        ctx.restore();
+        // ctx.restore();
     }
-    // ctx.save();
-    // ctx.translate(myGameArea.canvas.width / 2, myGameArea.canvas.height / 2);
-    // ctx.rotate(degrees * Math.PI / 180);
-    // ctx.beginPath();
-    // ctx.moveTo(0, 0);
-    // ctx.lineTo(myGameArea.canvas.width, myGameArea.canvas.height );
-    // ctx.strokeStyle = "red";
-    // ctx.stroke();
-    // ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
-    // ctx.restore();
-
 
 }
 
