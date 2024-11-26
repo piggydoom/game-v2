@@ -164,7 +164,7 @@ function update(secondsPassed)
 
     blimps.forEach((blimp) =>
     {
-        blimp.update(5);
+        // blimp.update(5);
         collision(playerPlane, blimp);
 
     }
@@ -259,8 +259,8 @@ function startGame()
         {
             let w = 73;
             let h = 126;
-            let y = getRandomInt(myGameArea.canvas.height);
-            let x = getRandomInt(myGameArea.canvas.width);
+            let y = (0);
+            let x = (-100);
             //problem here
             blimps.push(new Entity(images.blimp, w, h, x, y, "blimp", false, 45));
             
