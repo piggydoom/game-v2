@@ -260,7 +260,7 @@ function startGame()
             let w = 73;
             let h = 126;
             let y = (0);
-            let x = (-100);
+            let x = (0);
             //problem here
             blimps.push(new Entity(images.blimp, w, h, x, y, "blimp", false, 45));
             
@@ -518,7 +518,7 @@ class Entity
     {
         ctx.save();
         ctx.translate(myGameArea.canvas.width, myGameArea.canvas.height);
-        ctx.rotate(degrees * Math.PI / 180);
+        ctx.rotate(135 * Math.PI / 180);
         ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
         ctx.restore();
 
