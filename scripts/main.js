@@ -125,7 +125,7 @@ function gameLoop(timeStamp)
 
     blimps.forEach((blimp) =>
     {
-        blimp.drawRotated(135);
+        blimp.drawRotated(45);
             ctx.beginPath();
             ctx.moveTo(0, 0);
             ctx.lineTo(myGameArea.canvas.width, myGameArea.canvas.height);
@@ -164,7 +164,7 @@ function update(secondsPassed)
 
     blimps.forEach((blimp) =>
     {
-        // blimp.update(5);
+        blimp.update(5);
         collision(playerPlane, blimp);
 
     }
@@ -259,8 +259,8 @@ function startGame()
         {
             let w = 73;
             let h = 126;
-            let y = (0);
-            let x = (0);
+            let y = 500;
+            let x = 500;
             //problem here
             blimps.push(new Entity(images.blimp, w, h, x, y, "blimp", false, 45));
             
@@ -517,8 +517,8 @@ class Entity
     drawRotated(degrees)
     {
         ctx.save();
-        ctx.translate(myGameArea.canvas.width, myGameArea.canvas.height);
-        ctx.rotate(135 * Math.PI / 180);
+        ctx.translate(this.pX + this.width / 2, this.pY + this.width / 2);
+        ctx.rotate(degrees * Math.PI / 180);
         ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
         ctx.restore();
 
