@@ -125,10 +125,10 @@ function gameLoop(timeStamp)
 
     blimps.forEach((blimp) =>
     {
-        blimp.drawRotated(45);
+        blimp.drawRotated(135);
             ctx.beginPath();
             ctx.moveTo(0, 0);
-            ctx.lineTo(myGameArea.canvas.width, myGameArea.canvas.height);
+            ctx.lineTo(myGameArea.canvas.width - 100, myGameArea.canvas.height -100);
             ctx.stroke();
     });
 
@@ -527,14 +527,22 @@ class Entity
     update(speed)
     {
 
-        this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
+        
         if(this.type == "blimp"){
             this.pY += speed * Math.sin(0.785);
-            this.pX -= speed * Math.sin(0.785);
+            this.pX += speed * Math.sin(0.785);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(myGameArea.canvas.width - 100, myGameArea.canvas.height -100);
+            ctx.fillStyle = "red";
+            ctx.stroke();
 
+        } else{
+            this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
         } 
     }
 }
+
 
 
 function getRandomInt(max)
