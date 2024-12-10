@@ -569,15 +569,16 @@ class Entity
             // this.pY -= speed * Math.sin(0.785);
             // this.pX -= speed * Math.sin(0.785);
             if(direction == "left"){
-                this.pX -= speed;
+                this.pX -= f16SpeedMultiplier[speedMultiplierIndex] * speed;
             }
             else if(direction == "right"){
-                this.pX += speed;
+                this.pX += f16SpeedMultiplier[speedMultiplierIndex] * speed
+      
             }
 
 
         } else{
-            this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
+            this.pY += f16SpeedMultiplier[speedMultiplierIndex] * speed;
         } 
     }
 }
