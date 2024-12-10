@@ -13,7 +13,6 @@ let f16s = [];
 let su27s = [];
 let blimps = [];
 let blimps2 = [];
-let blimps2 = [];
 let explosionImage;
 const loopingCessnaAudio = new Audio("../styles/audio/cessna-looping.wav");
 let f16SpeedMultiplier = [2, 3, 6];
@@ -124,15 +123,15 @@ function gameLoop(timeStamp)
 
     });
 
-    // f16s.forEach((f16) =>
-    // {
-    //     f16.draw();
-    // });
+    f16s.forEach((f16) =>
+    {
+        f16.draw();
+    });
 
-    // su27s.forEach((su27) =>
-    // {
-    //     su27.draw();
-    // });
+    su27s.forEach((su27) =>
+    {
+        su27.draw();
+    });
 
     blimps.forEach((blimp) =>
     {
@@ -154,22 +153,26 @@ function update(secondsPassed)
 
 
    
+    clouds.forEach((cloud) =>
+    {
+        cloud.update(2);
+    }
+    );
 
+    // itterate over each f16 and apply collision
+    f16s.forEach((f16) =>
+    {
+        f16.update(5);
+        collision(playerPlane, f16);
+    }
+    );
 
-    //itterate over each f16 and apply collision
-    // f16s.forEach((f16) =>
-    // {
-    //     f16.update(5);
-    //     collision(playerPlane, f16);
-    // }
-    // );
-
-    // su27s.forEach((su27) =>
-    // {
-    //     su27.update(7);
-    //     collision(playerPlane, su27);
-    // }
-    // );
+    su27s.forEach((su27) =>
+    {
+        su27.update(7);
+        collision(playerPlane, su27);
+    }
+    );
 
     blimps.forEach((blimp) =>
     {
@@ -224,28 +227,28 @@ function startGame()
         window.requestAnimationFrame(gameLoop);
 
 
-        // //spawn f16s
-        // setInterval(() =>
-        // {
+        //spawn f16s
+        setInterval(() =>
+        {
 
-        //     let w = 76;
-        //     let h = 128;
-        //     let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
-        //     let y = -100;
-        //     f16s.push(new Entity(images.f16, w, h, x, y, "plane", true, 0));
-        // }, getRandomInt(7000) + 3000);
+            let w = 76;
+            let h = 128;
+            let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
+            let y = -100;
+            f16s.push(new Entity(images.f16, w, h, x, y, "plane", true, 0));
+        }, getRandomInt(7000) + 3000);
 
 
 
-        // //spawn su27
-        // setInterval(() =>
-        // {
-        //     let w = 128;
-        //     let h = 197;
-        //     let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
-        //     let y = -100;
-        //     su27s.push(new Entity(images.su27, w, h, x, y, "plane", true, 0));
-        // }, getRandomInt(4000) + 3000);
+        //spawn su27
+        setInterval(() =>
+        {
+            let w = 128;
+            let h = 197;
+            let x = Math.random() * Math.abs(myGameArea.canvas.width - w); //randomize X location to change spawning location
+            let y = -100;
+            su27s.push(new Entity(images.su27, w, h, x, y, "plane", true, 0));
+        }, getRandomInt(4000) + 3000);
 
 
 
@@ -298,17 +301,7 @@ function startGame()
             }, getRandomInt(4000) + 1000);
     
 
-         //spawan blimps2
-        //  setInterval(() =>
-        //     {
-        //         let w = 73;
-        //         let h = 126;
-        //         let y = -500;
-        //         let x = -getRandomInt(900) + 200;
-        //         //problem here
-        //         blimps2.push(new Entity(images.blimp, w, h, x, y, "blimp", false));
-    
-        //     }, 1000);
+
 
     })
 }
