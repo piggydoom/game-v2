@@ -12,6 +12,7 @@ let clouds = [];
 let f16s = [];
 let su27s = [];
 let blimps = [];
+let blimps2 = [];
 let explosionImage;
 const loopingCessnaAudio = new Audio("../styles/audio/cessna-looping.wav");
 let f16SpeedMultiplier = [2, 3, 6];
@@ -87,7 +88,16 @@ function gameLoop(timeStamp)
 
     if (startScore)
     {
-        score++;
+        if(speedMultiplierIndex == 0){
+            score++;
+        }
+        else if(speedMultiplierIndex == 1){
+            score += 3;
+        }
+        else if(speedMultiplierIndex == 2){
+            score += 6;
+        }
+
         scoreText.innerText = score;
 
     }
@@ -125,12 +135,13 @@ function gameLoop(timeStamp)
 
     blimps.forEach((blimp) =>
     {
-        blimp.drawRotated(-45);
-            ctx.beginPath();
-            ctx.moveTo(blimp.pX + blimp.width / 2, blimp.pY + blimp.height / 2);
-            ctx.lineTo(blimp.pX + blimp.width / 2 , blimp.pY + 1000);
-            ctx.stroke();
+        blimp.drawRotated(-90);
     });
+
+    blimps2.forEach((blimp) =>
+        {
+            blimp.drawRotated(90);
+        });
 
 }
 //game logic loop
@@ -164,11 +175,19 @@ function update(secondsPassed)
 
     blimps.forEach((blimp) =>
     {
-        blimp.update(5);
+        blimp.update(5, "left");
         collision(playerPlane, blimp);
 
     }
     );
+
+    blimps2.forEach((blimp) =>
+        {
+            blimp.update(5, "right");
+            collision(playerPlane, blimp);
+    
+        }
+        );
 }
 
 
@@ -254,17 +273,32 @@ function startGame()
             clouds.push(new Entity(images.cloud2, w, h, x, y, "cloud", false, 0));
         }, 300);
 
-        //spawan blimps
+      
+        
+        //spawn blimps
         setInterval(() =>
-        {
-            let w = 73;
-            let h = 126;
-            let y = 0;
-            let x = 200;
-            //problem here
-            blimps.push(new Entity(images.blimp, w, h, x, y, "blimp", false, 45));
-            
-        }, 1000);
+            {
+                let w = 73;
+                let h = 126;
+                let y = getRandomInt(myGameArea.canvas.height);
+                let x = myGameArea.canvas.width + 300;
+                
+                blimps.push(new Entity(images.blimp, w, h, x, y, "blimp", false, 45));
+                
+            }, getRandomInt(4000) + 1000);
+
+              //spawn blimps2
+        setInterval(() =>
+            {
+                let w = 73;
+                let h = 126;
+                let y = getRandomInt(myGameArea.canvas.height);
+                let x = -300;
+                
+                blimps2.push(new Entity(images.blimp, w, h, x, y, "blimp", false, 45));
+                
+            }, getRandomInt(4000) + 1000);
+    
 
     })
 }
@@ -388,7 +422,7 @@ function Player(image, width, height, pX, pY)
     {
         const distance = this.speed;
         this.pX = Math.max(0, Math.min(myGameArea.canvas.width - this.width, this.pX));
-        // this.pY = Math.max(0, Math.min(myGameArea.canvas.height - this.height, this.pY));
+        this.pY = Math.max(0, Math.min(myGameArea.canvas.height - this.height, this.pY));
 
 
 
@@ -411,7 +445,7 @@ function Player(image, width, height, pX, pY)
         if (keyPress.up)
         {
             speedMultiplierIndex = 2;
-            // this.pY -= distance;
+            this.pY -= distance;
             // if (this.pY <= 0) {
             //     this.pY = myGameArea.canvas.height - this.height;
 
@@ -421,7 +455,7 @@ function Player(image, width, height, pX, pY)
         if (keyPress.down)
         {
             speedMultiplierIndex = 0;
-            // this.pY += distance;
+            this.pY += distance;
             // if (this.pY >= myGameArea.canvas.height - this.height) {
             //     this.pY = 0;
             // }
@@ -519,24 +553,25 @@ class Entity
         ctx.save();
         ctx.translate(this.pX + this.width / 2, this.pY + this.height / 2);
         ctx.rotate(degrees * Math.PI / 180);
-        ctx.drawImage(this.image, 0, 0, this.width, this.height, this.pX, this.pY, this.width, this.height);
+        ctx.drawImage(this.image, 0, 0, this.width, this.height, -this.width / 2, -this.height / 2, this.width, this.height);
         ctx.restore();
 
     }
 
-    update(speed)
+    update(speed, direction)
     {
 
         
         if(this.type == "blimp"){
-            this.pY += speed;
-            // this.pY += speed * Math.sin(0.785);
-            // this.pX += speed * Math.sin(0.785);
-            ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.lineTo(myGameArea.canvas.width - 100, myGameArea.canvas.height -100);
-            ctx.fillStyle = "red";
-            ctx.stroke();
+            // this.pY -= speed * Math.sin(0.785);
+            // this.pX -= speed * Math.sin(0.785);
+            if(direction == "left"){
+                this.pX -= speed;
+            }
+            else if(direction == "right"){
+                this.pX += speed;
+            }
+
 
         } else{
             this.pY = this.pY + f16SpeedMultiplier[speedMultiplierIndex] * speed;
